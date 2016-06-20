@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     FragmentTransaction ft;
 
-    List<String> ls = new ArrayList<>();
+    //List<String> ls = new ArrayList<>();
 
 
     @Override
@@ -49,16 +49,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         ////////////////
-        RecyclerView rv = (RecyclerView)findViewById(R.id.recycler);
-        for(int i = 0; i<10;i++)
+        /*RecyclerView rv = (RecyclerView)findViewById(R.id.recycler);
+        for(int i = 0; i<20;i++)
             ls.add("case "+i);
 
 
         rv.setAdapter(new Adapter());
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setLayoutManager(new LinearLayoutManager(this));*/
+        ft = getSupportFragmentManager().beginTransaction();
+        CaseListFragment mf = new CaseListFragment();
+        ft.replace(R.id.container_content, mf);
+        ft.commit();
+
     }
     ///////////////////////////////
-    class ViewHolder extends RecyclerView.ViewHolder{
+    /*class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv;
 
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public int getItemCount() {
             return ls.size();
         }
-    }
+    }*/
     ///////////////////////////////
 
     @Override
@@ -133,10 +138,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_main) {
-            //ft = getSupportFragmentManager().beginTransaction();
-            //MainFragment mf = new MainFragment();
-            //ft.replace(R.id.container_content, mf);
-            //ft.commit();
+            ft = getSupportFragmentManager().beginTransaction();
+            CaseListFragment mf = new CaseListFragment();
+            ft.replace(R.id.container_content, mf);
+            ft.commit();
         } else if (id == R.id.nav_week) {
 
         } else if (id == R.id.nav_calendar) {
