@@ -24,18 +24,20 @@ public class MainFragment extends Fragment {
 
 
     RecyclerView rv;// = findViewById(R.id.recycleViewMain);
-    LinearLayoutManager llman = new LinearLayoutManager(getContext());
+    //LinearLayoutManager llman = new LinearLayoutManager(getContext());
     List<String> ls = new ArrayList<>();
-    Adapter adp = new Adapter();
+    //Adapter adp = new Adapter();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.main_layout, container, false);
-        rv = (RecyclerView) rv.findViewById(R.id.recycleViewMain);
-        rv.setLayoutManager(llman);
-        rv.setAdapter(adp);
+        rv = (RecyclerView)rv.findViewById(R.id.recycleViewMain);
+
         for(int i = 0; i<10;i++)
             ls.add("case "+i);
+
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setAdapter(new Adapter());
         return v;
 
     }
@@ -55,7 +57,8 @@ public class MainFragment extends Fragment {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ViewHolder(parent);
+            //return new ViewHolder(parent);
+            return new ViewHolder(View.inflate(getContext(), R.layout.item_main_layout, null));
         }
 
         @Override
