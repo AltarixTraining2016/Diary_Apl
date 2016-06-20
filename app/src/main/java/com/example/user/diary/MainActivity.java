@@ -49,12 +49,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         ////////////////
-        RecyclerView rv = (RecyclerView)findViewById(R.id.recycleViewMain);
+        RecyclerView rv = (RecyclerView)findViewById(R.id.recycler);
         for(int i = 0; i<10;i++)
             ls.add("case "+i);
 
-        rv.setLayoutManager(new LinearLayoutManager(this));
+
         rv.setAdapter(new Adapter());
+        rv.setLayoutManager(new LinearLayoutManager(this));
     }
     ///////////////////////////////
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tv = (TextView) itemView.findViewById(R.id.itemMain);
+            tv = (TextView) itemView.findViewById(R.id.textViewRecycler);
         }
     }
 
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             //return new ViewHolder(parent);
             //return new ViewHolder(View.inflate(MainActivity.this, R.layout.listitem_card, null));
-            return new ViewHolder(View.inflate(MainActivity.this, R.layout.item_main_layout, null));
+            return new ViewHolder(View.inflate(MainActivity.this, R.layout.listitem_card, null));
         }
 
         @Override
@@ -132,10 +133,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_main) {
-            ft = getSupportFragmentManager().beginTransaction();
-            MainFragment mf = new MainFragment();
-            ft.replace(R.id.container_content, mf);
-            ft.commit();
+            //ft = getSupportFragmentManager().beginTransaction();
+            //MainFragment mf = new MainFragment();
+            //ft.replace(R.id.container_content, mf);
+            //ft.commit();
         } else if (id == R.id.nav_week) {
 
         } else if (id == R.id.nav_calendar) {
