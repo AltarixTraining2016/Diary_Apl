@@ -48,51 +48,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ////////////////
-        /*RecyclerView rv = (RecyclerView)findViewById(R.id.recycler);
-        for(int i = 0; i<20;i++)
-            ls.add("case "+i);
 
-
-        rv.setAdapter(new Adapter());
-        rv.setLayoutManager(new LinearLayoutManager(this));*/
         ft = getSupportFragmentManager().beginTransaction();
         CaseListFragment mf = new CaseListFragment();
         ft.replace(R.id.container_content, mf);
         ft.commit();
 
+        ////////////////////
+
+
     }
-    ///////////////////////////////
-    /*class ViewHolder extends RecyclerView.ViewHolder{
-
-        TextView tv;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            tv = (TextView) itemView.findViewById(R.id.textViewRecycler);
-        }
-    }
-
-    class Adapter extends RecyclerView.Adapter<ViewHolder>{
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            //return new ViewHolder(parent);
-            //return new ViewHolder(View.inflate(MainActivity.this, R.layout.listitem_card, null));
-            return new ViewHolder(View.inflate(MainActivity.this, R.layout.listitem_card, null));
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.tv.setText(ls.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return ls.size();
-        }
-    }*/
-    ///////////////////////////////
 
     @Override
     public void onBackPressed() {

@@ -1,14 +1,16 @@
 package com.example.user.diary;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,6 +26,8 @@ public class CaseListFragment extends Fragment {
 
     List<String> ls = new ArrayList<>();
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.case_list_layout, container, false);
@@ -34,12 +38,37 @@ public class CaseListFragment extends Fragment {
             else ls.add("case  /nffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff      "+i);
 
 
+
         rv.setAdapter(new Adapter());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = (FragmentTransaction)getActivity().getSupportFragmentManager().beginTransaction();
+                CaseFragment cf = new CaseFragment();
+                ft.replace(R.id.container_content, cf);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
+        //fab.setOnClickListener(new View.OnClickListener() {
+         //   @Override
+         //   public void onClick(View view) {
+                //ft = getSupportFragmentManager().beginTransaction();
+                //CaseFragment mf = new CaseFragment();
+                //ft.replace(R.id.container_content, mf);
+                //ft.commit();
+
+         //   }
+        //});
 
 
         return v;
     }
+
+
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
