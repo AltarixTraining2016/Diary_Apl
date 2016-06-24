@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
         android:layout_margin="@dimen/fab_margin"
-        android:layout_marginRight="40dp"
+        android:onClick="onClickF"
         android:src="@android:drawable/ic_input_add" />
 
     <!---LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->

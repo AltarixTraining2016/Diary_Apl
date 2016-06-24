@@ -46,28 +46,18 @@ public class CaseListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction ft = (FragmentTransaction)getActivity().getSupportFragmentManager().beginTransaction();
+
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 CaseFragment cf = new CaseFragment();
                 ft.replace(R.id.container_content, cf);
-                ft.addToBackStack(null);
                 ft.commit();
-            }
+           }
         });
-        //fab.setOnClickListener(new View.OnClickListener() {
-         //   @Override
-         //   public void onClick(View view) {
-                //ft = getSupportFragmentManager().beginTransaction();
-                //CaseFragment mf = new CaseFragment();
-                //ft.replace(R.id.container_content, mf);
-                //ft.commit();
 
-         //   }
-        //});
 
 
         return v;
     }
-
 
 
     class ViewHolder extends RecyclerView.ViewHolder{
