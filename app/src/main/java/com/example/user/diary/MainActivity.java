@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         ft = getSupportFragmentManager().beginTransaction();
-        CaseListFragment mf = new CaseListFragment();
+        //CaseListFragment mf = new CaseListFragment();
+        CalendarFragment mf = new CalendarFragment();
         ft.replace(R.id.container_content, mf);
         ft.commit();
 
@@ -110,15 +111,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_main) {
             ft = getSupportFragmentManager().beginTransaction();
-            CaseListFragment mf = new CaseListFragment();
-            ft.replace(R.id.container_content, mf);
+            CaseListFragment clf = new CaseListFragment();
+            ft.replace(R.id.container_content, clf);
             ft.commit();
         } else if (id == R.id.nav_week) {
-
+            ft = getSupportFragmentManager().beginTransaction();
+            WeekFragment wf = new WeekFragment ();
+            ft.replace(R.id.container_content, wf);
+            ft.commit();
         } else if (id == R.id.nav_calendar) {
-
+            ft = getSupportFragmentManager().beginTransaction();
+            CalendarFragment cf = new CalendarFragment();
+            ft.replace(R.id.container_content, cf);
+            ft.commit();
         } else if (id == R.id.nav_listCase) {
-
+            ft = getSupportFragmentManager().beginTransaction();
+            NameCaseFragment ncf = new NameCaseFragment();
+            ft.replace(R.id.container_content, ncf);
+            ft.commit();
         }else if (id == R.id.nav_about) {
             ft = getSupportFragmentManager().beginTransaction();
             AboutFragment af = new AboutFragment();
