@@ -1,12 +1,16 @@
 package com.example.user.diary;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,6 +25,7 @@ public class NameCaseFragment extends Fragment {
     }
 
     List<String> ls = new ArrayList<>();
+    EditText et;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,11 +36,21 @@ public class NameCaseFragment extends Fragment {
             if(i%2!=0)
                 ls.add("case "+i);
             else ls.add("case  /nffffffffffffff      "+i);
-
-
-
         rv.setAdapter(new Adapter());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        //FloatingActionButton fab = (FloatingActionButton)v.findViewById(R.id.fab_name_case);
+        Button bt = (Button)v.findViewById(R.id.button_add_name_case);
+        et = (EditText)v.findViewById(R.id.editText_name_case);
+        bt.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String st = et.getText().toString();
+                if(st!="")
+                    ls.add(st);
+                et.setText("");
+            }
+        });
 
         return v;
     }

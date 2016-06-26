@@ -4,20 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/container_content"
+
     android:layout_below="@id/toolbar"
     android:layout_gravity="right|left"
     android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/container_cont"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/section_label"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rec_week"
+        android:layout_width="@dimen/widthCard"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
-
-    <include layout="@layout/week_layout_cont"/>
-
-    </android.support.v4.view.ViewPager>
+        android:layout_gravity="center"
+        />
 
 
 

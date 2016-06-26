@@ -10,12 +10,52 @@
     android:orientation="vertical">
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rec_name_case"
-        android:layout_width="@dimen/widthCard"
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        />
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:weightSum="1">
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText_name_case"
+            android:layout_gravity="center_horizontal"
+            android:inputType="text" />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="@string/add"
+            android:id="@+id/button_add_name_case"
+            android:textAllCaps="false"/>
+
+        <!--android.support.design.widget.FloatingActionButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@android:drawable/ic_input_add"
+            android:layout_gravity="bottom"
+            android:layout_weight="0.17" /-->
+    </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rec_name_case"
+            android:layout_width="@dimen/widthCard"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+
+
 
 
 

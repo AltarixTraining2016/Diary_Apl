@@ -42,7 +42,7 @@ public class CaseListFragment extends Fragment {
         rv.setAdapter(new Adapter());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab_case_list);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

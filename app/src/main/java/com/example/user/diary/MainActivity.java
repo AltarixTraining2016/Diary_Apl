@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     FragmentTransaction ft;
+
 
     //List<String> ls = new ArrayList<>();
 
@@ -55,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         ft = getSupportFragmentManager().beginTransaction();
-        //CaseListFragment mf = new CaseListFragment();
-        CalendarFragment mf = new CalendarFragment();
+        CaseListFragment mf = new CaseListFragment();
+        //CalendarFragment mf = new CalendarFragment();
         ft.replace(R.id.container_content, mf);
         ft.commit();
 
