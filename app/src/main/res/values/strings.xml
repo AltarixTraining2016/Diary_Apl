@@ -22,6 +22,8 @@
     <string name="rst">rstdxfcgvbhjkl</string>
     <string name="descrip">Описание</string>
     <string name="add">Добавить</string>
+    <string name="nameCase">Название</string>
+    <string name="dataCase">Дата</string>
 
 
 </resources>

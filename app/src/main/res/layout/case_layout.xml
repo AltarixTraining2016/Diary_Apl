@@ -2,20 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
-
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:id="@+id/view"
-        android:layout_gravity="center_horizontal"
-        android:background="#c62a32" />
+    android:weightSum="1"
+    android:gravity="center_horizontal">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Название"
+        android:text="@string/nameCase"
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal" />
 
@@ -44,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Дата"
+        android:text="@string/dataCase"
         android:id="@+id/textView3"
         android:layout_gravity="center_horizontal" />
 
@@ -105,7 +99,7 @@
         android:layout_gravity="center_horizontal" />
 
     <Switch
-        android:layout_width="144dp"
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:text="Дело сделано"
         android:id="@+id/switch1"
