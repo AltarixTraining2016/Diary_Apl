@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FBFF00</color>
     <color name="tvBackground">#337700</color>
+
+    <color name="testColor">#9ef4da</color>
+
 </resources>

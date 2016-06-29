@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView_selected_data"
+        android:layout_margin="20dp" />
+
+    <android.support.design.widget.CoordinatorLayout
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,6 +24,7 @@
     android:layout_below="@id/toolbar"
     android:layout_gravity="right|left"
         android:orientation="vertical">
+
 
 
     <android.support.v7.widget.RecyclerView
@@ -26,7 +43,10 @@
         android:onClick="onClickF"
         android:src="@android:drawable/ic_input_add" />
 
+
+
     <!---LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--/LinearLayout-->
 
 </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

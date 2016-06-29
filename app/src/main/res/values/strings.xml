@@ -18,12 +18,24 @@
     <string name="nav_settings">Настройки</string>
     <string name="nav_about">О приложении</string>
 
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="section_format">День недели: %1$d</string>
     <string name="rst">rstdxfcgvbhjkl</string>
     <string name="descrip">Описание</string>
     <string name="add">Добавить</string>
+    <string name="save">Сохранить</string>
     <string name="nameCase">Название</string>
     <string name="dataCase">Дата</string>
+    <string name="cancel">Отмена</string>
+
+    <string-array name="weekDay">
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+        <item>Воскресенье</item>
+    </string-array>
 
 
 

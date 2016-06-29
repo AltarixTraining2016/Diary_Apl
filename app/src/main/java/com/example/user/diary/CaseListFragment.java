@@ -20,13 +20,29 @@ import java.util.List;
  * Created by User on 20.06.2016.
  */
 public class CaseListFragment extends Fragment {
-    public static CaseListFragment create() {
-        return new CaseListFragment();
+
+    public CaseListFragment(){}
+    public CaseListFragment(String data){}
+
+    //public static CaseListFragment create() {return new CaseListFragment();}
+    public static CaseListFragment create(){//String data) {
+        CaseListFragment cf = new CaseListFragment();
+        //Bundle args = new Bundle();
+        //args.putString(DATA_CASE_LIST, data);
+        //cf.setArguments(args);
+        return cf;
     }
 
+    private final String DATA_CASE_LIST = "data_case_list";
     List<String> ls = new ArrayList<>();
 
-
+    /*public CaseListFragment(String data){
+        CaseListFragment cf = new CaseListFragment();
+        Bundle args = new Bundle();
+        args.putString(DATA_CASE_LIST, data);
+        cf.setArguments(args);
+        //return cf;
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,7 +74,6 @@ public class CaseListFragment extends Fragment {
 
         return v;
     }
-
 
     class ViewHolder extends RecyclerView.ViewHolder{
 

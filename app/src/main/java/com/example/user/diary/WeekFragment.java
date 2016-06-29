@@ -45,59 +45,8 @@ public class WeekFragment extends Fragment {
 
 
 
-        //setRecycler(v,R.id.rec_mond);
-        //setRecycler(v,R.id.rec_tues);
-        //setRecycler(v,R.id.rec_wedn);
-        //setRecycler(v,R.id.rec_thur);
-        //setRecycler(v,R.id.rec_frid);
-        //setRecycler(v,R.id.rec_satur);
-        //setRecycler(v,R.id.rec_san);
-
         return v;
     }
-/*
-    public  void setRecycler(View v,int id){
-        rv = (RecyclerView)v.findViewById(id);
-        for(int i = 0; i<20;i++)
-            if(i%2!=0)
-                ls.add("case "+i);
-            else ls.add("case  /nffffffffff      "+i);
-        rv.setAdapter(new Adapter());
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder{
-
-        TextView tv;
-        //LinearLayout ll;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            //ll = (LinearLayout) itemView.findViewById(R.id.ll);
-            tv = (TextView) itemView.findViewById(R.id.textViewRecycler);
-        }
-    }
-
-    class Adapter extends RecyclerView.Adapter<ViewHolder>{
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            //return new ViewHolder(parent);
-            //return new ViewHolder(View.inflate(MainActivity.this, R.layout.listitem_card, null));
-            return new ViewHolder(View.inflate(getContext(), R.layout.listitem_card, null));
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.tv.setText(ls.get(position));
-            //if(position%2==0) holder.ll.setBackgroundColor(getResources().getColor(R.color.tvBackground));
-        }
-
-        @Override
-        public int getItemCount() {
-            return ls.size();
-        }
-    }*/
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -107,6 +56,7 @@ public class WeekFragment extends Fragment {
 
         RecyclerView rv;
         List<String> ls = new ArrayList<>();
+        List<String> wd= new ArrayList<String>();
 
         public PlaceholderFragment() {
         }
@@ -125,7 +75,18 @@ public class WeekFragment extends Fragment {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.week_layout_cont, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            wd.add("Понедельник");
+            wd.add("Вторник");
+            wd.add("Среда");
+            wd.add("Четверг");
+            wd.add("Пятница");
+            wd.add("Суббота");
+            wd.add("Воскресенье");
+
+            textView.setText(wd.get(getArguments().getInt(ARG_SECTION_NUMBER)));
+            //textView.setText(getString(getArguments().getInt(ARG_SECTION_NUMBER)));
+            textView.setTextSize(24);
             setRecycler(rootView,R.id.rec_week);
             //CheckBox cb = (CheckBox)rootView.findViewById(R.id.checkBox);
             //if(getArguments().getInt(ARG_SECTION_NUMBER)%2==0)
@@ -188,26 +149,31 @@ public class WeekFragment extends Fragment {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return PlaceholderFragment.newInstance(position);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 4;
+            return 7;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "SECTION 0";
                 case 1:
-                    return "SECTION 2";
+                    return "SECTION 1";
                 case 2:
-                    return "SECTION 3";
+                    return "SECTION 2";
                 case 3:
+                    return "SECTION 3";
+                case 4:
                     return "SECTION 4";
+                case 5:
+                    return "SECTION 5";
+                case 6:
+                    return "SECTION 6";
             }
             return null;
         }
