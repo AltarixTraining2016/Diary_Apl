@@ -8,26 +8,26 @@
     android:gravity="center_horizontal">
 
     <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Android Calendar View Example"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:weekNumberColor="#0000ff"
-        android:weekSeparatorLineColor="#00ff00"/>
-
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="315dp"
-        android:layout_height="315dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
         android:id="@+id/date_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Calendar View Date Display"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/datePicker"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/select_date"
+        android:id="@+id/button_date_select"
+        android:textAllCaps="false"
+        android:background="@drawable/style_button_select_date"
+        android:layout_marginBottom="30dp"
+        android:layout_margin="20dp" />
+
 </LinearLayout>

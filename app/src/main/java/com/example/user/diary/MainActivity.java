@@ -18,9 +18,13 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,6 +34,8 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     FragmentTransaction ft;
+    Bundle bundle;
+    SimpleDateFormat dateFormat;
 
 
     //List<String> ls = new ArrayList<>();
@@ -57,9 +63,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         ft = getSupportFragmentManager().beginTransaction();
-        CaseListFragment mf = new CaseListFragment();
-        //CalendarFragment mf = new CalendarFragment();
-        ft.replace(R.id.container_content, mf);
+        CaseListFragment clf = new CaseListFragment();
+        bundle = new Bundle();
+        dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        bundle.putString("DATA_CASE_LIST",dateFormat.format(new Date()));
+        clf.setArguments(bundle);
+        ft.replace(R.id.container_content, clf);
         ft.commit();
 
         ////////////////////
@@ -114,6 +123,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_main) {
             ft = getSupportFragmentManager().beginTransaction();
             CaseListFragment clf = new CaseListFragment();
+            bundle = new Bundle();
+            dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            bundle.putString("DATA_CASE_LIST",dateFormat.format(new Date()));
+            clf.setArguments(bundle);
             ft.replace(R.id.container_content, clf);
             ft.commit();
         } else if (id == R.id.nav_week) {

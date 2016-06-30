@@ -11,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView_selected_data"
+        android:text="Data"
+        android:id="@+id/text_data_case_list"
         android:layout_margin="20dp" />
 
     <android.support.design.widget.CoordinatorLayout

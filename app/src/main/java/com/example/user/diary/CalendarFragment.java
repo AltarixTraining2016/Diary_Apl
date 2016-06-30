@@ -6,9 +6,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 
@@ -20,10 +25,11 @@ public class CalendarFragment extends Fragment {
         return new CalendarFragment();
     }
 
-    @BindView(R.id.calendarView)
-    CalendarView cv;
-    TextView dateDisplay;
+    //@BindView(R.id.calendarView)
+    //CalendarView cv;
 
+    TextView dateDisplay;
+    DatePicker dp;
     FragmentTransaction ft;
 
     @Override
@@ -31,23 +37,37 @@ public class CalendarFragment extends Fragment {
         View v = inflater.inflate(R.layout.calendar_layout, container, false);
 
 
-        cv = (CalendarView) v.findViewById(R.id.calendarView);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
         dateDisplay = (TextView)v.findViewById(R.id.date_display);
-        dateDisplay.setText("Date: ");
+        dateDisplay.setText("Сегодня: "+dateFormat.format(new Date()));
 
-        cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        dp = (DatePicker)v.findViewById(R.id.datePicker);
+
+        Button btds = (Button)v.findViewById(R.id.button_date_select);
+        btds.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
-                dateDisplay.setText("Date: " + i2 + " / " + (i1+1) + " / " + i);
-
+            public void onClick(View view) {
                 ft = getActivity().getSupportFragmentManager().beginTransaction();
                 CaseListFragment clf = new CaseListFragment();
+                Bundle bundle = new Bundle();
+                String date = "";
+                if(dp.getDayOfMonth()<10) date +="0"+dp.getDayOfMonth();
+                else  date+=dp.getDayOfMonth();
+                date +=".";
+                if((dp.getMonth()+1)<10) date +="0"+(dp.getMonth()+1);
+                else  date+=dp.getMonth();
+                date +="."+dp.getYear();
+                bundle.putString("DATA_CASE_LIST", date);
+                clf.setArguments(bundle);
                 ft.replace(R.id.container_content, clf);
                 ft.commit();
 
-                //Toast.makeText(getActivity().getApplicationContext(), "Selected Date:\n" + "Day = " + i2 + "\n" + "Month = " + i1 + "\n" + "Year = " + i, Toast.LENGTH_LONG).show();
+                //
             }
         });
+
+
 
         return v;
     }

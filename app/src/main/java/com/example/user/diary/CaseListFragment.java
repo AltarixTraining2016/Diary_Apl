@@ -54,6 +54,9 @@ public class CaseListFragment extends Fragment {
             else ls.add("case  /nffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff      "+i);
 
 
+        TextView tvData = (TextView)v.findViewById(R.id.text_data_case_list);
+        tvData.setText(this.getArguments().getString("DATA_CASE_LIST"));
+
 
         rv.setAdapter(new Adapter());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
