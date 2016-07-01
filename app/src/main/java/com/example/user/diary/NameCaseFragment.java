@@ -1,5 +1,6 @@
 package com.example.user.diary;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * Created by User on 25.06.2016.
  */
-public class NameCaseFragment extends Fragment {
+public class NameCaseFragment extends Fragment implements Titleable{
     public static NameCaseFragment create() {
         return new NameCaseFragment();
     }
@@ -53,6 +54,11 @@ public class NameCaseFragment extends Fragment {
         });
 
         return v;
+    }
+
+    @Override
+    public String getTitle(Context context) {
+        return context.getString(R.string.nav_name_Case);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{

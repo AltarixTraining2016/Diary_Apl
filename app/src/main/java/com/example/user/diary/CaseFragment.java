@@ -1,22 +1,16 @@
 package com.example.user.diary;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +18,14 @@ import java.util.List;
 /**
  * Created by User on 08.06.2016.
  */
-public class CaseFragment extends Fragment {
+public class CaseFragment extends Fragment implements Titleable{
 
     List<String> testList = new ArrayList<String>();
 
     Button bts;
     Button btc;
     Spinner sp;
+    Spinner sp_color;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,9 +50,14 @@ public class CaseFragment extends Fragment {
             }
         });
 
+
+
         testList.add("1");
         testList.add("2");
         testList.add("3");
+        testList.add("werwer");
+        testList.add("e3e");
+
 
 
         sp = (Spinner)v.findViewById(R.id.spinner);
@@ -65,8 +65,89 @@ public class CaseFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp.setAdapter(adapter);
 
+        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent,
+                                       View itemSelected, int selectedItemPosition, long selectedId) {
+
+                //TextView ttt = (TextView)getActivity().findViewById(R.id.textView2);
+                //ttt.setText(ttt.getText()+" "+selectedItemPosition);
+
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        MyCustomAdapter ad = new MyCustomAdapter(getContext(),
+                R.layout.spinner_dropdown_item, new String[]{"0","1","2","3","4","5"});
+
+        sp_color = (Spinner)v.findViewById(R.id.spinner_color);
+        sp_color.setAdapter(ad);
+
+
 
         return v;
+    }
+
+    public class MyCustomAdapter extends ArrayAdapter<String> {
+
+        public MyCustomAdapter(Context context, int textViewResourceId,
+                               String[] objects) {
+            super(context, textViewResourceId, objects);
+            // TODO Auto-generated constructor stub
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView,
+                                    ViewGroup parent) {
+            // TODO Auto-generated method stub
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // TODO Auto-generated method stub
+            return getCustomView(position, convertView, parent);
+        }
+
+        public View getCustomView(int position, View convertView,
+                                  ViewGroup parent) {
+            // TODO Auto-generated method stub
+            // return super.getView(position, convertView, parent);
+
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View v = inflater.inflate(R.layout.spinner_dropdown_item, parent, false);
+            //TextView label = (TextView) row.findViewById(R.id.weekofday);
+            //label.setText(testList[position]);
+
+            switch (position) {
+                case 0:
+                    v.setBackgroundResource(R.drawable.style_color_red);
+                    break;
+                case 1:
+                    v.setBackgroundResource(R.drawable.style_color_green);
+                    break;
+                case 2:
+                    v.setBackgroundResource(R.drawable.style_color_blue);
+                    break;
+                case 3:
+                    v.setBackgroundResource(R.drawable.style_color_orange);
+                    break;
+                case 4:
+                    v.setBackgroundResource(R.drawable.style_color_violet);
+                    break;
+                case 5:
+                    v.setBackgroundResource(R.drawable.style_color_yellow);
+                    break;
+            }
+
+            return v;
+        }
+    }
+
+
+    @Override
+    public String getTitle(Context context) {
+        return context.getString(R.string.nav_case);
     }
 
 

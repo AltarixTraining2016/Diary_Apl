@@ -14,9 +14,11 @@
     <string name="nav_main">Сегодня</string>
     <string name="nav_week">Неделя</string>
     <string name="nav_calendar">Календарь</string>
-    <string name="nav_listCase">Список возможных дел</string>
+    <string name="nav_list_Case">Список дел</string>
+    <string name="nav_name_Case">Список возможных дел</string>
     <string name="nav_settings">Настройки</string>
     <string name="nav_about">О приложении</string>
+    <string name="nav_case">Создание/редактирование дела</string>
 
     <string name="section_format">День недели: %1$d</string>
     <string name="rst">rstdxfcgvbhjkl</string>
@@ -25,8 +27,10 @@
     <string name="save">Сохранить</string>
     <string name="nameCase">Название</string>
     <string name="dataCase">Дата</string>
+    <string name="color">Цвет</string>
     <string name="cancel">Отмена</string>
     <string name="select_date">Посмотреть список дел</string>
+
 
     <string-array name="weekDay">
         <item>Понедельник</item>

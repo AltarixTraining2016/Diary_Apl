@@ -1,5 +1,6 @@
 package com.example.user.diary;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ import java.util.List;
 /**
  * Created by User on 20.06.2016.
  */
-public class CaseListFragment extends Fragment {
+public class CaseListFragment extends Fragment implements Titleable{
 
     public CaseListFragment(){}
     public CaseListFragment(String data){}
@@ -70,6 +73,10 @@ public class CaseListFragment extends Fragment {
                 CaseFragment cf = new CaseFragment();
                 ft.replace(R.id.container_content, cf);
                 ft.commit();
+                if (cf instanceof Titleable) {
+                    String title = ((Titleable) cf).getTitle(getActivity());
+                    getActivity().setTitle(title);
+                }
            }
         });
 
@@ -78,14 +85,19 @@ public class CaseListFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public String getTitle(Context context) {
+        return context.getString(R.string.nav_list_Case);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv;
-        //LinearLayout ll;
+        LinearLayout ll;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            //ll = (LinearLayout) itemView.findViewById(R.id.ll);
+            ll = (LinearLayout) itemView.findViewById(R.id.ll);
             tv = (TextView) itemView.findViewById(R.id.textViewRecycler);
         }
     }
@@ -102,7 +114,7 @@ public class CaseListFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             holder.tv.setText(ls.get(position));
-            //if(position%2==0) holder.ll.setBackgroundColor(getResources().getColor(R.color.tvBackground));
+            if(position%2==0) holder.ll.setBackgroundResource(R.drawable.style_button_add_name);//getResources().getColor(R.color.tvBackground));
         }
 
         @Override

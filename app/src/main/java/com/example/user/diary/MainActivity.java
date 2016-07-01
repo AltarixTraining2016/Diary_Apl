@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -37,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Bundle bundle;
     SimpleDateFormat dateFormat;
 
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+
 
     //List<String> ls = new ArrayList<>();
 
@@ -62,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
+        replaceContent(CaseListFragment.create());
+        /*
         ft = getSupportFragmentManager().beginTransaction();
         CaseListFragment clf = new CaseListFragment();
         bundle = new Bundle();
@@ -69,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bundle.putString("DATA_CASE_LIST",dateFormat.format(new Date()));
         clf.setArguments(bundle);
         ft.replace(R.id.container_content, clf);
-        ft.commit();
+        ft.commit();*/
 
         ////////////////////
 
@@ -117,44 +123,56 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_main) {
-            ft = getSupportFragmentManager().beginTransaction();
-            CaseListFragment clf = new CaseListFragment();
-            bundle = new Bundle();
-            dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-            bundle.putString("DATA_CASE_LIST",dateFormat.format(new Date()));
-            clf.setArguments(bundle);
-            ft.replace(R.id.container_content, clf);
-            ft.commit();
-        } else if (id == R.id.nav_week) {
-            ft = getSupportFragmentManager().beginTransaction();
-            WeekFragment wf = new WeekFragment ();
-            ft.replace(R.id.container_content, wf);
-            ft.commit();
-        } else if (id == R.id.nav_calendar) {
-            ft = getSupportFragmentManager().beginTransaction();
-            CalendarFragment cf = new CalendarFragment();
-            ft.replace(R.id.container_content, cf);
-            ft.commit();
-        } else if (id == R.id.nav_listCase) {
-            ft = getSupportFragmentManager().beginTransaction();
-            NameCaseFragment ncf = new NameCaseFragment();
-            ft.replace(R.id.container_content, ncf);
-            ft.commit();
-        }else if (id == R.id.nav_about) {
-            ft = getSupportFragmentManager().beginTransaction();
-            AboutFragment af = new AboutFragment();
-            ft.replace(R.id.container_content, af);
-            ft.commit();
+        final boolean b;
+        switch (item.getItemId()) {
+            case R.id.nav_main:
+                replaceContent(CaseListFragment.create());
+                b = true;
+                break;
+            case R.id.nav_week:
+                replaceContent(WeekFragment.create());
+                b = true;
+                break;
+            case R.id.nav_calendar:
+                replaceContent(CalendarFragment.create());
+                b = true;
+                break;
+            case R.id.nav_neme_Case:
+                replaceContent(NameCaseFragment.create());
+                b = true;
+                break;
+            case R.id.nav_about:
+                replaceContent(AboutFragment.create());
+                b = true;
+                break;
+            default:
+                b = false;
+                break;
         }
+        if (b) {
+            drawer.closeDrawers();
+        }
+        return b;
 
+        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //drawer.closeDrawer(GravityCompat.START);
+        //return true;
+    }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+    private void replaceContent(Fragment fragment) {
+        //
+        //ft = getSupportFragmentManager().beginTransaction();
+        //ft.replace(R.id.container_content, fragment);
+        //ft.commit();
+        bundle = new Bundle();
+        dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        bundle.putString("DATA_CASE_LIST",dateFormat.format(new Date()));
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_content, fragment).commit();
+        if (fragment instanceof Titleable) {
+            String title = ((Titleable) fragment).getTitle(this);
+            setTitle(title);
+        }
     }
 
 

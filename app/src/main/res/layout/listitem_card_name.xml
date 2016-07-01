@@ -8,17 +8,20 @@
     app:cardCornerRadius="1dp"
     android:foregroundGravity="center">
 
+
     <LinearLayout
         android:id="@+id/lll"
         android:padding="10dp"
         android:layout_width="@dimen/widthCard"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <TextView
             android:id="@+id/textViewRecyclerNameCase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
 
     </LinearLayout>
 

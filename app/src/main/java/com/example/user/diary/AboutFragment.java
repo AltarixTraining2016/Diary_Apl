@@ -1,5 +1,6 @@
 package com.example.user.diary;
 
+        import android.content.Context;
         import android.os.Bundle;
         import android.support.design.widget.FloatingActionButton;
         import android.support.design.widget.Snackbar;
@@ -16,7 +17,7 @@ package com.example.user.diary;
 /**
  * Created by User on 03.06.2016.
  */
-public class AboutFragment extends Fragment {
+public class AboutFragment extends Fragment implements Titleable{
 
     public static AboutFragment create() {
         return new AboutFragment();
@@ -38,4 +39,9 @@ public class AboutFragment extends Fragment {
 
     }
     */
+
+    @Override
+    public String getTitle(Context context) {
+        return context.getString(R.string.nav_about);
+    }
 }

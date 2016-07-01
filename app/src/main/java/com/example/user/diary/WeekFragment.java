@@ -1,5 +1,6 @@
 package com.example.user.diary;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * Created by User on 25.06.2016.
  */
-public class WeekFragment extends Fragment {
+public class WeekFragment extends Fragment implements Titleable{
     public static WeekFragment create() {
         return new WeekFragment();
     }
@@ -46,6 +47,11 @@ public class WeekFragment extends Fragment {
 
 
         return v;
+    }
+
+    @Override
+    public String getTitle(Context context) {
+        return context.getString(R.string.nav_week);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////

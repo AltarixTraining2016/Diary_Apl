@@ -1,5 +1,6 @@
 package com.example.user.diary;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,7 +21,7 @@ import butterknife.BindView;
 /**
  * Created by User on 25.06.2016.
  */
-public class CalendarFragment extends Fragment {
+public class CalendarFragment extends Fragment implements Titleable{
     public static CalendarFragment create() {
         return new CalendarFragment();
     }
@@ -62,7 +63,10 @@ public class CalendarFragment extends Fragment {
                 clf.setArguments(bundle);
                 ft.replace(R.id.container_content, clf);
                 ft.commit();
-
+                if (clf instanceof Titleable) {
+                    String title = ((Titleable) clf).getTitle(getActivity());
+                    getActivity().setTitle(title);
+                }
                 //
             }
         });
@@ -70,5 +74,10 @@ public class CalendarFragment extends Fragment {
 
 
         return v;
+    }
+
+    @Override
+    public String getTitle(Context context) {
+        return context.getString(R.string.nav_calendar);
     }
 }
