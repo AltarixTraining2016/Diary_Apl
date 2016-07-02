@@ -9,20 +9,28 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DataBaseHelper extends SQLiteOpenHelper {
 
-    private static final String NAME = "cases.sqlite";
-    private static final int VERSION = 1;
+    private static DataBaseHelper ins = null;
 
-    public DataBaseHelper(Context context) {
-        super(context,NAME, null, VERSION);
+    public static void init(Context context){
+        ins = new DataBaseHelper(context);
+    }
+
+    public static DataBaseHelper getInstance(){
+        return ins;
+    }
+
+    private DataBaseHelper(Context context) {
+        super(context, "diary.sqlite", null, 1);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + NAME + " (" + "_id integer primary key autoincrement, " + "names text not null);");
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL("CREATE TABLE table_list_name_case (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL);");
+        //sqLiteDatabase.execSQL("INSERT INTO table_list_name_case (_id, name) VALUES (1,rrrrr)");
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
 }
