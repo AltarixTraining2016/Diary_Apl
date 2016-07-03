@@ -26,7 +26,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE table_list_name_case (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL);");
-        //sqLiteDatabase.execSQL("INSERT INTO table_list_name_case (_id, name) VALUES (1,rrrrr)");
+        sqLiteDatabase.execSQL("CREATE TABLE table_list_case (_id INTEGER PRIMARY KEY AUTOINCREMENT, name_id INTEGER NOT NULL);");
     }
 
     @Override

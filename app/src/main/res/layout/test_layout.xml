@@ -15,43 +15,39 @@
         android:id="@+id/etName"/>
 
     <Button
-        android:id="@+id/b1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="select" />
-    <Button
-        android:id="@+id/b2"
+        android:id="@+id/button_insert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
         android:text="insert" />
     <Button
-        android:id="@+id/b3"
+        android:id="@+id/button_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
         android:text="update" />
     <Button
-        android:id="@+id/b4"
+        android:id="@+id/button_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
         android:text="delete" />
 
+    <!--
     <Button
         android:id="@+id/b5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
         android:text="db_push" />
+    -->
 
     <Button
-        android:id="@+id/b6"
+        android:id="@+id/button_display"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
-        android:text="db_pull" />
+        android:text="display tables" />
 
     <TextView
         android:id="@+id/tV"
@@ -59,22 +55,32 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ScrollView
+        android:layout_height="wrap_content" >
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/tv_name_db"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="table_name"
+                    android:layout_weight="0.53" />
 
             <TextView
-                android:id="@+id/tv_db"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:id="@+id/tv_case_db"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="table_case" />
 
-        </ScrollView>
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
 
 </LinearLayout>

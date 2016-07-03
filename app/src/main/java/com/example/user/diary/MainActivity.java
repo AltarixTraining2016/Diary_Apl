@@ -67,18 +67,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         replaceContent(CaseListFragment.create());
-        /*
-        ft = getSupportFragmentManager().beginTransaction();
-        CaseListFragment clf = new CaseListFragment();
-        bundle = new Bundle();
-        dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        bundle.putString("DATA_CASE_LIST",dateFormat.format(new Date()));
-        clf.setArguments(bundle);
-        ft.replace(R.id.container_content, clf);
-        ft.commit();*/
-
-        ////////////////////
-
 
     }
 
