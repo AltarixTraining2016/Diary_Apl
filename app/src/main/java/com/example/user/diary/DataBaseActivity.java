@@ -2,9 +2,7 @@ package com.example.user.diary;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,17 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.StreamCorruptedException;
-
 /**
  * Created by User on 01.07.2016.
  */
-public class testActivity extends AppCompatActivity {
+public class DataBaseActivity extends AppCompatActivity {
 
     EditText idEditText;
     EditText nameEdiText;
@@ -30,14 +21,10 @@ public class testActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_layout);
+        setContentView(R.layout.db_layout);
 
         idEditText = (EditText) findViewById(R.id.etID);
         nameEdiText = (EditText) findViewById(R.id.etName);
-
-        setTables();
-
-
 
         /////////////////////////////////////////////select
         /*
@@ -90,7 +77,15 @@ public class testActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String id = idEditText.getText().toString();
                 Log.v("Sah", "delete " + id);
-                DataBaseHelper.getInstance().getWritableDatabase().delete("table_list_name_case", "_id = ?", new String[]{id});
+                //try{
+                    DataBaseHelper.getInstance().getWritableDatabase().delete("table_list_name_case", "_id = ?", new String[]{id});
+                //}
+                //catch (Exception e)
+                //{
+                //    Toast toast = Toast.makeText(getApplicationContext(),"На данный элемент есть ссылка!", Toast.LENGTH_SHORT);
+                //    toast.show();
+                //}
+
             }
         });
 
@@ -145,18 +140,17 @@ public class testActivity extends AppCompatActivity {
                 tv_case.setText("");
                 int id;
                 //c1.moveToFirst();
-                Cursor c2 = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT _id, name_id FROM table_list_case", null);
+                Cursor c2 = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT * FROM table_list_case", null);
                 if (c2.moveToFirst()) {
                     while (!c2.isAfterLast()) {
                         _id = c2.getString(0);
                         name = c2.getString(1);
 
-                        id = c2.getInt(1);// Integer.parseInt(name);
+                        id = c2.getInt(1);
                         c1.moveToPosition(id-1);
 
-                        //name = c1.getString(1);
-                        //tv_case.setText(tv_case.getText()+name+" " + c1.getString(1) +"\n");
-                        tv_case.setText(tv_case.getText()+_id + " "+ c1.getString(1) +"\n");
+                        tv_case.setText(tv_case.getText()+_id + "   "+ c1.getString(1)+ "   "+ c2.getString(2)+ "   "+ c2.getString(3)
+                                + "   "+ c2.getString(4)+ "   "+ c2.getString(5)+ "   "+ c2.getInt(6)+ "   "+ c2.getInt(7)+"\n");
                         c2.moveToNext();
                     }
                     //c.moveToFirst();
@@ -164,43 +158,12 @@ public class testActivity extends AppCompatActivity {
                 } else {
                     Log.w("Sah", "empty!");
                 }
-
-
+                c1.close();
+                c2.close();
             }
         });
 
     }
 
-    public void setTables(){
-        ContentValues cv = new ContentValues();
-        cv.put("_id", "1");  cv.put("name", "универ");
-        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_name_case", null, cv);
-        cv.put("_id", "2");  cv.put("name", "курсы");
-        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_name_case", null, cv);
-        cv.put("_id", "3");  cv.put("name", "ино");
-        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_name_case", null, cv);
-        cv.put("_id", "4");  cv.put("name", "магазин");
-        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_name_case", null, cv);
-        cv.put("_id", "5");  cv.put("name", "гулять");
-        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_name_case", null, cv);
-
-        //////////////////////////////////////////////////
-        cv.clear();
-        cv.put("_id", "1");  cv.put("name_id", "1");
-        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
-        cv.put("_id", "2");  cv.put("name_id", "2");
-        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
-        cv.put("_id", "3");  cv.put("name_id", "3");
-        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
-        cv.put("_id", "4");  cv.put("name_id", "4");
-        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
-        cv.put("_id", "5");  cv.put("name_id", "5");
-        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
-        cv.put("_id", "6");  cv.put("name_id", "3");
-        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
-        cv.put("_id", "7");  cv.put("name_id", "5");
-        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
-
-    }
 
 }

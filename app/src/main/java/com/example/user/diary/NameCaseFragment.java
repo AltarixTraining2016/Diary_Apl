@@ -1,12 +1,14 @@
 package com.example.user.diary;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +35,18 @@ public class NameCaseFragment extends Fragment implements Titleable{
         View v = inflater.inflate(R.layout.name_case_layout, container, false);
 
         RecyclerView rv = (RecyclerView)v.findViewById(R.id.rec_name_case);
-        for(int i = 0; i<20;i++)
-            if(i%2!=0)
-                ls.add("case "+i);
-            else ls.add("case  /nffffffffffffff      "+i);
+
+        Cursor cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name FROM table_list_name_case", null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                ls.add(cursor.getString(0));
+                cursor.moveToNext();
+            }
+        } else {
+            Log.w("Sah", "empty!");
+        }
+        cursor.close();
+
         rv.setAdapter(new Adapter());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 

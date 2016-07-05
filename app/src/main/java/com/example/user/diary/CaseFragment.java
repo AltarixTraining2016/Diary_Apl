@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -26,6 +27,10 @@ public class CaseFragment extends Fragment implements Titleable{
     Button btc;
     Spinner sp;
     Spinner sp_color;
+
+    private final String DATE_CASE = "date_case";
+    private final String POSITION = "position";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,6 +62,9 @@ public class CaseFragment extends Fragment implements Titleable{
         testList.add("3");
         testList.add("werwer");
         testList.add("e3e");
+
+        EditText et = (EditText)v.findViewById(R.id.editText_description);
+        et.setText(this.getArguments().getString(DATE_CASE)+" "+this.getArguments().getInt(POSITION));
 
 
 

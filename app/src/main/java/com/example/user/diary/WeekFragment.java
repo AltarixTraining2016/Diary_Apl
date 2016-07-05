@@ -1,6 +1,7 @@
 package com.example.user.diary;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,13 +9,17 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,6 +48,7 @@ public class WeekFragment extends Fragment implements Titleable{
 
         mViewPager = (ViewPager) v.findViewById(R.id.container_cont);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
 
 
 
@@ -91,22 +97,70 @@ public class WeekFragment extends Fragment implements Titleable{
             wd.add("Воскресенье");
 
             textView.setText(wd.get(getArguments().getInt(ARG_SECTION_NUMBER)));
-            //textView.setText(getString(getArguments().getInt(ARG_SECTION_NUMBER)));
             textView.setTextSize(24);
             setRecycler(rootView,R.id.rec_week);
-            //CheckBox cb = (CheckBox)rootView.findViewById(R.id.checkBox);
-            //if(getArguments().getInt(ARG_SECTION_NUMBER)%2==0)
-            //    cb.setChecked(true);
-            //else cb.setChecked(false);
+
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            ls.clear();
+            TextView tvData = (TextView)rootView.findViewById(R.id.week_date);
+            tvData.setTextSize(24);
+            String date = getDate(getArguments().getInt(ARG_SECTION_NUMBER));
+            tvData.setText(date); //dateFormat.format(new Date()));
+
+            Cursor cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name_id FROM table_list_case WHERE date = ?", new String[]{date});
+            Cursor cursor_dop = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name FROM table_list_name_case", null);
+            if (cursor.moveToFirst()) {
+                cursor_dop.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    cursor_dop.moveToPosition(cursor.getInt(0)-1);
+                    ls.add(cursor_dop.getString(0));
+                    cursor.moveToNext();
+                }
+            } else {
+                Log.w("Sah", "empty!");
+            }
+            cursor.close();
+            cursor_dop.close();
+
             return rootView;
+        }
+
+        public String getDate(int j){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEEEEEE");
+            //SimpleDateFormat dateFormat = new SimpleDateFormat("u");
+            Date d = new Date();
+            int i = 0;// = Integer.parseInt(dateFormat.format(new Date()));
+            int day;
+            if(dateFormat.format(d)=="пн") i = 1;
+            else if (dateFormat.format(d)=="вт") i = 2;
+            else if (dateFormat.format(d)=="ср") i = 3;
+            else if (dateFormat.format(d)=="чт") i = 4;
+            else if (dateFormat.format(d)=="пт") i = 5;
+            else if (dateFormat.format(d)=="сб") i = 6;
+            else if (dateFormat.format(d)=="вс") i = 7;
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, -1);
+
+
+            if(j<i){
+                day = i-j;
+                calendar.add(Calendar.DATE, -1*day);
+            }
+            else if(j>i){
+                day = j-i;
+                calendar.add(Calendar.DATE, day);
+            }
+            dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            d = calendar.getTime();
+            return dateFormat.format(d);
         }
 
         public  void setRecycler(View v,int id){
             rv = (RecyclerView)v.findViewById(id);
-            for(int i = 0; i<20;i++)
-                if(i%2!=0)
-                    ls.add("case "+i);
-                else ls.add("case  /nffffffffff      "+i);
+
+
             rv.setAdapter(new Adapter());
             rv.setLayoutManager(new LinearLayoutManager(getContext()));
         }

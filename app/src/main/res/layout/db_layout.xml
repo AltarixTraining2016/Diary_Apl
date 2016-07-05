@@ -69,7 +69,7 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:text="table_name"
-                    android:layout_weight="0.53" />
+                    android:layout_weight="0.21" />
 
             <TextView
                 android:id="@+id/tv_case_db"

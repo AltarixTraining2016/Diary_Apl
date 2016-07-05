@@ -33,7 +33,7 @@ public class AboutFragment extends Fragment implements Titleable{
         b.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), testActivity.class);
+                Intent intent = new Intent(getContext(), DataBaseActivity.class);
                 startActivity(intent);
             }
         });

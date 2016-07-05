@@ -1,5 +1,6 @@
 package com.example.user.diary;
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
+        setTables();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -162,6 +164,87 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setTitle(title);
         }
     }
+
+    public void setTables(){
+        ContentValues cv = new ContentValues();
+        cv.put("_id", "1");  cv.put("name", "универ");
+        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_name_case", null, cv);
+        cv.put("_id", "2");  cv.put("name", "курсы");
+        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_name_case", null, cv);
+        cv.put("_id", "3");  cv.put("name", "ино");
+        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_name_case", null, cv);
+        cv.put("_id", "4");  cv.put("name", "магазин");
+        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_name_case", null, cv);
+        cv.put("_id", "5");  cv.put("name", "гулять");
+        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_name_case", null, cv);
+
+        //////////////////////////////////////////////////
+        cv.clear();
+        cv.put("_id", "1");
+        cv.put("name_id", "1");
+        cv.put("description", "u");
+        cv.put("date", "05.07.2016");
+        cv.put("time_start", "11:11");
+        cv.put("time_end", "17:56");
+        cv.put("status", "0");
+        cv.put("color", "0");
+        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
+        cv.put("_id", "2");
+        cv.put("name_id", "2");
+        cv.put("description", "urr");
+        cv.put("date", "05.07.2016");
+        cv.put("time_start", "17:11");
+        cv.put("time_end", "19:56");
+        cv.put("status", "0");
+        cv.put("color", "4");
+        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
+        cv.put("_id", "3");
+        cv.put("name_id", "3");
+        cv.put("description", "mr");
+        cv.put("date", "05.07.2016");
+        cv.put("time_start", "");
+        cv.put("time_end", "");
+        cv.put("status", "0");
+        cv.put("color", "3");
+        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
+        cv.put("_id", "4");
+        cv.put("name_id", "4");
+        cv.put("description", "gr");
+        cv.put("date", "06.07.2016");
+        cv.put("time_start", "17:11");
+        cv.put("time_end", "19:56");
+        cv.put("status", "0");
+        cv.put("color", "2");
+        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
+        cv.put("_id", "5");
+        cv.put("name_id", "5");
+        cv.put("description", "fr");
+        cv.put("date", "07.07.2016");
+        cv.put("time_start", "");
+        cv.put("time_end", "");
+        cv.put("status", "0");
+        cv.put("color", "3");
+        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
+        cv.put("_id", "6");
+        cv.put("name_id", "3");
+        cv.put("description", "tr");
+        cv.put("date", "07.07.2016");
+        cv.put("time_start", "17:11");
+        cv.put("time_end", "");
+        cv.put("status", "0");
+        cv.put("color", "5");
+        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
+        cv.put("_id", "7");
+        cv.put("name_id", "5");
+        cv.put("description", "er");
+        cv.put("date", "05.07.2016");
+        cv.put("time_start", "");
+        cv.put("time_end", "");
+        cv.put("status", "0");
+        cv.put("color", "2");
+        DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
+    }
+
 
 
 }

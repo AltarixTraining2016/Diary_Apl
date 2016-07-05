@@ -34,6 +34,13 @@
         android:layout_gravity="center"
         />
 
+
+
+    <!---LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--/LinearLayout-->
+
+</android.support.design.widget.CoordinatorLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_case_list"
         android:layout_width="wrap_content"
@@ -44,9 +51,4 @@
         android:src="@android:drawable/ic_input_add" />
 
 
-
-    <!---LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--/LinearLayout-->
-
-</android.support.design.widget.CoordinatorLayout>
 </LinearLayout>

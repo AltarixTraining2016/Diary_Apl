@@ -1,20 +1,25 @@
 package com.example.user.diary;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +31,7 @@ public class CaseListFragment extends Fragment implements Titleable{
 
     public CaseListFragment(){}
     public CaseListFragment(String data){}
+    String date;
 
     //public static CaseListFragment create() {return new CaseListFragment();}
     public static CaseListFragment create(){//String data) {
@@ -51,14 +57,33 @@ public class CaseListFragment extends Fragment implements Titleable{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.case_list_layout, container, false);
         RecyclerView rv = (RecyclerView)v.findViewById(R.id.recycler);
-        for(int i = 0; i<20;i++)
-            if(i%2!=0)
-                ls.add("case "+i);
-            else ls.add("case  /nffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff      "+i);
 
+        //for(int i = 0; i<20;i++)
+        //    if(i%2!=0)
+        //        ls.add("case "+i);
+        //    else ls.add("case  /nffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff      "+i);
 
+        date = this.getArguments().getString("DATA_CASE_LIST");
         TextView tvData = (TextView)v.findViewById(R.id.text_data_case_list);
-        tvData.setText(this.getArguments().getString("DATA_CASE_LIST"));
+        tvData.setText(date);
+
+
+        Cursor cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name_id FROM table_list_case WHERE date = ?", new String[]{date});
+        Cursor cursor_dop = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name FROM table_list_name_case", null);
+        if (cursor.moveToFirst()) {
+            cursor_dop.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                cursor_dop.moveToPosition(cursor.getInt(0)-1);
+                ls.add(cursor_dop.getString(0));
+                cursor.moveToNext();
+            }
+        } else {
+            Log.w("Sah", "empty!");
+        }
+        cursor.close();
+        cursor_dop.close();
+
+
 
 
         rv.setAdapter(new Adapter());
@@ -80,6 +105,25 @@ public class CaseListFragment extends Fragment implements Titleable{
            }
         });
 
+        /*rv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                CaseFragment cf = new CaseFragment();
+                ft.replace(R.id.container_content, cf);
+                ft.commit();
+                if (cf instanceof Titleable) {
+                    String title = ((Titleable) cf).getTitle(getActivity());
+                    getActivity().setTitle(title);
+                }
+                return false;
+            }
+
+        });*/
+
+
+
+
 
 
         return v;
@@ -90,7 +134,7 @@ public class CaseListFragment extends Fragment implements Titleable{
         return context.getString(R.string.nav_list_Case);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView tv;
         LinearLayout ll;
@@ -99,6 +143,24 @@ public class CaseListFragment extends Fragment implements Titleable{
             super(itemView);
             ll = (LinearLayout) itemView.findViewById(R.id.ll);
             tv = (TextView) itemView.findViewById(R.id.textViewRecycler);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Log.d("Item Listener", ""+this.getLayoutPosition());
+            int position = this.getLayoutPosition();
+            Bundle bundle = new Bundle();
+            bundle.putString("DATE_CASE",date);
+            bundle.putInt("POSITION",position);
+            CaseFragment fragment = new CaseFragment();
+            fragment.setArguments(bundle);
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_content, fragment).commit();
+            if (fragment instanceof Titleable) {
+                String title = ((Titleable) fragment).getTitle(getActivity());
+                getActivity().setTitle(title);
+            }
         }
     }
 
@@ -114,7 +176,8 @@ public class CaseListFragment extends Fragment implements Titleable{
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             holder.tv.setText(ls.get(position));
-            if(position%2==0) holder.ll.setBackgroundResource(R.drawable.style_button_add_name);//getResources().getColor(R.color.tvBackground));
+
+            //if(position%2==0) holder.ll.setBackgroundResource(R.drawable.style_button_add_name);//getResources().getColor(R.color.tvBackground));
         }
 
         @Override
