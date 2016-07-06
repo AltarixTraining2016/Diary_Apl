@@ -45,7 +45,14 @@
         android:id="@+id/button_db"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25px"/>
+        android:layout_marginTop="25px"
+        android:text="db"/>
+    <Button
+        android:id="@+id/button_set_test_table"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25px"
+        android:text="set db"/>
 
 
 </LinearLayout>

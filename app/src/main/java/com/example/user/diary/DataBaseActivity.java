@@ -72,7 +72,7 @@ public class DataBaseActivity extends AppCompatActivity {
 
         Button but_del = (Button)findViewById(R.id.button_delete);
         assert but_del != null;
-        but_upd.setOnClickListener(new View.OnClickListener() {
+        but_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String id = idEditText.getText().toString();

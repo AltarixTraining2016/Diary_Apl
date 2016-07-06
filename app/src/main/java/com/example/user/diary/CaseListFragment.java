@@ -1,5 +1,6 @@
 package com.example.user.diary;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class CaseListFragment extends Fragment implements Titleable{
     public CaseListFragment(){}
     public CaseListFragment(String data){}
     String date;
+    Cursor cursor;
 
     //public static CaseListFragment create() {return new CaseListFragment();}
     public static CaseListFragment create(){//String data) {
@@ -44,6 +46,7 @@ public class CaseListFragment extends Fragment implements Titleable{
 
     private final String DATA_CASE_LIST = "data_case_list";
     List<String> ls = new ArrayList<>();
+    List<Integer> colorId = new ArrayList<>();
 
     /*public CaseListFragment(String data){
         CaseListFragment cf = new CaseListFragment();
@@ -68,13 +71,15 @@ public class CaseListFragment extends Fragment implements Titleable{
         tvData.setText(date);
 
 
-        Cursor cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name_id FROM table_list_case WHERE date = ?", new String[]{date});
+        cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name_id,color FROM table_list_case WHERE date = ?", new String[]{date});
         Cursor cursor_dop = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name FROM table_list_name_case", null);
         if (cursor.moveToFirst()) {
             cursor_dop.moveToFirst();
             while (!cursor.isAfterLast()) {
                 cursor_dop.moveToPosition(cursor.getInt(0)-1);
                 ls.add(cursor_dop.getString(0));
+                colorId.add(cursor.getInt(1));
+                //setColor(cursor.getInt(1));
                 cursor.moveToNext();
             }
         } else {
@@ -94,40 +99,26 @@ public class CaseListFragment extends Fragment implements Titleable{
             @Override
             public void onClick(View view) {
 
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                int position = ls.size();
+                Bundle bundle = new Bundle();
+                bundle.putString(CaseFragment.DATE_CASE,date);;
+                bundle.putInt(CaseFragment.POSITION,position);
+                bundle.putInt(CaseFragment.NEW_CASE,1);
                 CaseFragment cf = new CaseFragment();
-                ft.replace(R.id.container_content, cf);
-                ft.commit();
+                cf.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_content, cf).commit();
                 if (cf instanceof Titleable) {
                     String title = ((Titleable) cf).getTitle(getActivity());
                     getActivity().setTitle(title);
                 }
+
            }
         });
 
-        /*rv.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                CaseFragment cf = new CaseFragment();
-                ft.replace(R.id.container_content, cf);
-                ft.commit();
-                if (cf instanceof Titleable) {
-                    String title = ((Titleable) cf).getTitle(getActivity());
-                    getActivity().setTitle(title);
-                }
-                return false;
-            }
-
-        });*/
-
-
-
-
-
-
         return v;
     }
+
+
 
     @Override
     public String getTitle(Context context) {
@@ -152,8 +143,9 @@ public class CaseListFragment extends Fragment implements Titleable{
             Log.d("Item Listener", ""+this.getLayoutPosition());
             int position = this.getLayoutPosition();
             Bundle bundle = new Bundle();
-            bundle.putString("DATE_CASE",date);
-            bundle.putInt("POSITION",position);
+            bundle.putString(CaseFragment.DATE_CASE,date);//"DATE_CASE",date);
+            bundle.putInt(CaseFragment.POSITION,position);//"POSITION",position);
+            bundle.putInt(CaseFragment.NEW_CASE,0);
             CaseFragment fragment = new CaseFragment();
             fragment.setArguments(bundle);
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_content, fragment).commit();
@@ -177,7 +169,32 @@ public class CaseListFragment extends Fragment implements Titleable{
         public void onBindViewHolder(ViewHolder holder, int position) {
             holder.tv.setText(ls.get(position));
 
+            setColor(colorId.get(position),holder.ll);
             //if(position%2==0) holder.ll.setBackgroundResource(R.drawable.style_button_add_name);//getResources().getColor(R.color.tvBackground));
+        }
+
+        public void setColor(int position,LinearLayout ll){
+            //LinearLayout ll = (LinearLayout)getActivity().findViewById(R.id.ll);
+            switch (position) {
+                case 0:
+                    ll.setBackgroundResource(R.drawable.style_card_red);
+                    break;
+                case 1:
+                    ll.setBackgroundResource(R.drawable.style_card_green);
+                    break;
+                case 2:
+                    ll.setBackgroundResource(R.drawable.style_card_blue);
+                    break;
+                case 3:
+                    ll.setBackgroundResource(R.drawable.style_card_orange);
+                    break;
+                case 4:
+                    ll.setBackgroundResource(R.drawable.style_card_violet);
+                    break;
+                case 5:
+                    ll.setBackgroundResource(R.drawable.style_card_yellow);
+                    break;
+            }
         }
 
         @Override

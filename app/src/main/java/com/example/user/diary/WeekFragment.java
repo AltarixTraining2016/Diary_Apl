@@ -1,8 +1,12 @@
 package com.example.user.diary;
 
+import android.annotation.TargetApi;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -21,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by User on 25.06.2016.
@@ -69,6 +75,9 @@ public class WeekFragment extends Fragment implements Titleable{
         RecyclerView rv;
         List<String> ls = new ArrayList<>();
         List<String> wd= new ArrayList<String>();
+        List<Integer> colorId = new ArrayList<>();
+        Cursor cursor;
+        String date;
 
         public PlaceholderFragment() {
         }
@@ -105,16 +114,17 @@ public class WeekFragment extends Fragment implements Titleable{
             ls.clear();
             TextView tvData = (TextView)rootView.findViewById(R.id.week_date);
             tvData.setTextSize(24);
-            String date = getDate(getArguments().getInt(ARG_SECTION_NUMBER));
+            date = getDate(getArguments().getInt(ARG_SECTION_NUMBER));
             tvData.setText(date); //dateFormat.format(new Date()));
 
-            Cursor cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name_id FROM table_list_case WHERE date = ?", new String[]{date});
+            cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name_id,color FROM table_list_case WHERE date = ?", new String[]{date});
             Cursor cursor_dop = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name FROM table_list_name_case", null);
             if (cursor.moveToFirst()) {
                 cursor_dop.moveToFirst();
                 while (!cursor.isAfterLast()) {
                     cursor_dop.moveToPosition(cursor.getInt(0)-1);
                     ls.add(cursor_dop.getString(0));
+                    colorId.add(cursor.getInt(1));
                     cursor.moveToNext();
                 }
             } else {
@@ -123,6 +133,27 @@ public class WeekFragment extends Fragment implements Titleable{
             cursor.close();
             cursor_dop.close();
 
+            FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab_week_list);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    int position = ls.size();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(CaseFragment.DATE_CASE,date);//"DATE_CASE",date);
+                    bundle.putInt(CaseFragment.POSITION,position);//"POSITION",position);
+                    bundle.putInt(CaseFragment.NEW_CASE,1);
+                    CaseFragment cf = new CaseFragment();
+                    cf.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_content, cf).commit();
+                    if (cf instanceof Titleable) {
+                        String title = ((Titleable) cf).getTitle(getActivity());
+                        getActivity().setTitle(title);
+                    }
+
+                }
+            });
+
             return rootView;
         }
 
@@ -130,19 +161,19 @@ public class WeekFragment extends Fragment implements Titleable{
             SimpleDateFormat dateFormat = new SimpleDateFormat("EEEEEEE");
             //SimpleDateFormat dateFormat = new SimpleDateFormat("u");
             Date d = new Date();
-            int i = 0;// = Integer.parseInt(dateFormat.format(new Date()));
+            int i = 0;
             int day;
-            if(dateFormat.format(d)=="пн") i = 1;
-            else if (dateFormat.format(d)=="вт") i = 2;
-            else if (dateFormat.format(d)=="ср") i = 3;
-            else if (dateFormat.format(d)=="чт") i = 4;
-            else if (dateFormat.format(d)=="пт") i = 5;
-            else if (dateFormat.format(d)=="сб") i = 6;
-            else if (dateFormat.format(d)=="вс") i = 7;
+
+            if(dateFormat.format(d).equals("пн")) i = 0;
+            else if (dateFormat.format(d).equals("вт"))i = 1;
+            else if (dateFormat.format(d).equals("ср")) i = 2;
+            else if (dateFormat.format(d).equals("чт")) i = 3;
+            else if (dateFormat.format(d).equals("пт")) i = 4;
+            else if (dateFormat.format(d).equals("сб")) i = 5;
+            else if (dateFormat.format(d).equals("вс")) i = 6;
 
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, -1);
-
+            //calendar.add(Calendar.DATE, i);
 
             if(j<i){
                 day = i-j;
@@ -164,15 +195,35 @@ public class WeekFragment extends Fragment implements Titleable{
             rv.setAdapter(new Adapter());
             rv.setLayoutManager(new LinearLayoutManager(getContext()));
         }
-        class ViewHolder extends RecyclerView.ViewHolder{
+
+        class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
             TextView tv;
-            //LinearLayout ll;
+            LinearLayout ll;
 
             public ViewHolder(View itemView) {
                 super(itemView);
-                //ll = (LinearLayout) itemView.findViewById(R.id.ll);
+                ll = (LinearLayout) itemView.findViewById(R.id.ll);
                 tv = (TextView) itemView.findViewById(R.id.textViewRecycler);
+
+                itemView.setOnClickListener(this);
+            }
+
+            @Override
+            public void onClick(View v) {
+                Log.d("Item Listener", ""+this.getLayoutPosition());
+                int position = this.getLayoutPosition();
+                Bundle bundle = new Bundle();
+                bundle.putString(CaseFragment.DATE_CASE,date);
+                bundle.putInt(CaseFragment.POSITION,position);
+                bundle.putInt(CaseFragment.NEW_CASE,0);
+                CaseFragment fragment = new CaseFragment();
+                fragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_content, fragment).commit();
+                if (fragment instanceof Titleable) {
+                    String title = ((Titleable) fragment).getTitle(getActivity());
+                    getActivity().setTitle(title);
+                }
             }
         }
 
@@ -188,7 +239,33 @@ public class WeekFragment extends Fragment implements Titleable{
             @Override
             public void onBindViewHolder(ViewHolder holder, int position) {
                 holder.tv.setText(ls.get(position));
+
+                setColor(colorId.get(position),holder.ll);
                 //if(position%2==0) holder.ll.setBackgroundColor(getResources().getColor(R.color.tvBackground));
+            }
+
+            public void setColor(int position,LinearLayout ll){
+                //LinearLayout ll = (LinearLayout)getActivity().findViewById(R.id.ll);
+                switch (position) {
+                    case 0:
+                        ll.setBackgroundResource(R.drawable.style_card_red);
+                        break;
+                    case 1:
+                        ll.setBackgroundResource(R.drawable.style_card_green);
+                        break;
+                    case 2:
+                        ll.setBackgroundResource(R.drawable.style_card_blue);
+                        break;
+                    case 3:
+                        ll.setBackgroundResource(R.drawable.style_card_orange);
+                        break;
+                    case 4:
+                        ll.setBackgroundResource(R.drawable.style_card_violet);
+                        break;
+                    case 5:
+                        ll.setBackgroundResource(R.drawable.style_card_yellow);
+                        break;
+                }
             }
 
             @Override

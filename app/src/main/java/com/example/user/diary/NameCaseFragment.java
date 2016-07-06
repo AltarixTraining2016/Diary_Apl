@@ -1,5 +1,6 @@
 package com.example.user.diary;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class NameCaseFragment extends Fragment implements Titleable{
 
     List<String> ls = new ArrayList<>();
     EditText et;
+    Cursor cursor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class NameCaseFragment extends Fragment implements Titleable{
 
         RecyclerView rv = (RecyclerView)v.findViewById(R.id.rec_name_case);
 
-        Cursor cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name FROM table_list_name_case", null);
+        cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name FROM table_list_name_case", null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 ls.add(cursor.getString(0));
@@ -57,8 +59,29 @@ public class NameCaseFragment extends Fragment implements Titleable{
             @Override
             public void onClick(View view) {
                 String st = et.getText().toString();
-                if(st!="")
+                int id;
+                String idd = "";
+
+                if(!st.isEmpty()){
+                    cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT _id FROM table_list_name_case", null);
+                    if (cursor.moveToFirst()) {
+                        cursor.moveToLast();
+                        id = cursor.getInt(0);
+                        id++;
+                        idd = String.valueOf(id);
+                    } else {
+                        Log.w("Sah", "empty!");
+                    }
+                    cursor.close();
+
+                    ContentValues cv = new ContentValues();
+                    cv.put("_id", idd);
+                    cv.put("name", st);
+                    DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_name_case", null, cv);
+
                     ls.add(st);
+                }
+
                 et.setText("");
             }
         });

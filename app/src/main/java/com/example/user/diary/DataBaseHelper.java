@@ -27,8 +27,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON");
         sqLiteDatabase.execSQL("CREATE TABLE table_list_name_case (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL);");
-        sqLiteDatabase.execSQL("CREATE TABLE table_list_case (_id INTEGER PRIMARY KEY AUTOINCREMENT, name_id INTEGER NOT NULL,"
-                +" description TEXT, date TEXT NOT NULL, time_start TEXT, time_end TEXT, status INTEGER NOT NULL, color INTEGER NOT NULL);");
+        sqLiteDatabase.execSQL("CREATE TABLE table_list_case ("
+                +"_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                +" name_id INTEGER NOT NULL,"
+                +" description TEXT,"
+                +" date TEXT NOT NULL,"
+                +" time_start TEXT,"
+                +"time_end TEXT,"
+                +"status INTEGER NOT NULL,"
+                +"color INTEGER NOT NULL);");
         //sqLiteDatabase.execSQL("CREATE TABLE table_list_case (_id INTEGER PRIMARY KEY AUTOINCREMENT, FOREIGN KEY (name_id) REFERENCES table_list_name_case (_id) ON DELETE CASCADE);");
     }
 
