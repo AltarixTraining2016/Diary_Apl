@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -237,6 +238,8 @@ public class CaseFragment extends Fragment implements Titleable{
                 Bundle bundle = new Bundle();
                 bundle.putString("DATA_CASE_LIST",date);
                 cf.setArguments(bundle);
+
+                //getFragmentManager().popBackStack();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_content, cf).commit();
                 if (cf instanceof Titleable) {
                     String title = ((Titleable) cf).getTitle(getActivity());

@@ -76,6 +76,7 @@ public class WeekFragment extends Fragment implements Titleable{
         List<String> ls = new ArrayList<>();
         List<String> wd= new ArrayList<String>();
         List<Integer> colorId = new ArrayList<>();
+        List<Integer> status = new ArrayList<>();
         Cursor cursor;
         String date;
 
@@ -117,7 +118,7 @@ public class WeekFragment extends Fragment implements Titleable{
             date = getDate(getArguments().getInt(ARG_SECTION_NUMBER));
             tvData.setText(date); //dateFormat.format(new Date()));
 
-            cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name_id,color FROM table_list_case WHERE date = ?", new String[]{date});
+            cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name_id,color,status FROM table_list_case WHERE date = ?", new String[]{date});
             Cursor cursor_dop = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name FROM table_list_name_case", null);
             if (cursor.moveToFirst()) {
                 cursor_dop.moveToFirst();
@@ -125,6 +126,7 @@ public class WeekFragment extends Fragment implements Titleable{
                     cursor_dop.moveToPosition(cursor.getInt(0)-1);
                     ls.add(cursor_dop.getString(0));
                     colorId.add(cursor.getInt(1));
+                    status.add(cursor.getInt(2));
                     cursor.moveToNext();
                 }
             } else {
@@ -240,31 +242,34 @@ public class WeekFragment extends Fragment implements Titleable{
             public void onBindViewHolder(ViewHolder holder, int position) {
                 holder.tv.setText(ls.get(position));
 
-                setColor(colorId.get(position),holder.ll);
-                //if(position%2==0) holder.ll.setBackgroundColor(getResources().getColor(R.color.tvBackground));
+                setColor(colorId.get(position),status.get(position),holder.ll);
             }
 
-            public void setColor(int position,LinearLayout ll){
-                //LinearLayout ll = (LinearLayout)getActivity().findViewById(R.id.ll);
-                switch (position) {
-                    case 0:
-                        ll.setBackgroundResource(R.drawable.style_card_red);
-                        break;
-                    case 1:
-                        ll.setBackgroundResource(R.drawable.style_card_green);
-                        break;
-                    case 2:
-                        ll.setBackgroundResource(R.drawable.style_card_blue);
-                        break;
-                    case 3:
-                        ll.setBackgroundResource(R.drawable.style_card_orange);
-                        break;
-                    case 4:
-                        ll.setBackgroundResource(R.drawable.style_card_violet);
-                        break;
-                    case 5:
-                        ll.setBackgroundResource(R.drawable.style_card_yellow);
-                        break;
+            public void setColor(int position,int status,LinearLayout ll){
+                if(status==1){
+                    ll.setBackgroundResource(R.drawable.style_card_grey);
+                }
+                else {
+                    switch (position) {
+                        case 0:
+                            ll.setBackgroundResource(R.drawable.style_card_red);
+                            break;
+                        case 1:
+                            ll.setBackgroundResource(R.drawable.style_card_green);
+                            break;
+                        case 2:
+                            ll.setBackgroundResource(R.drawable.style_card_blue);
+                            break;
+                        case 3:
+                            ll.setBackgroundResource(R.drawable.style_card_orange);
+                            break;
+                        case 4:
+                            ll.setBackgroundResource(R.drawable.style_card_violet);
+                            break;
+                        case 5:
+                            ll.setBackgroundResource(R.drawable.style_card_yellow);
+                            break;
+                    }
                 }
             }
 

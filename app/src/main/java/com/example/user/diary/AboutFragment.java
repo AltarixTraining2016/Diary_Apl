@@ -71,7 +71,7 @@ public class AboutFragment extends Fragment implements Titleable{
         cv.put("date", "05.07.2016");
         cv.put("time_start", "17:11");
         cv.put("time_end", "19:56");
-        cv.put("status", "0");
+        cv.put("status", "1");
         cv.put("color", "4");
         DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
         cv.put("_id", "3");
@@ -98,7 +98,7 @@ public class AboutFragment extends Fragment implements Titleable{
         cv.put("date", "07.07.2016");
         cv.put("time_start", "");
         cv.put("time_end", "");
-        cv.put("status", "0");
+        cv.put("status", "1");
         cv.put("color", "1");
         DataBaseHelper.getInstance().getWritableDatabase().insert("table_list_case", null, cv);
         cv.put("_id", "6");
