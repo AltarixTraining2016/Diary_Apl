@@ -35,16 +35,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 +" time_start TEXT,"
                 +"time_end TEXT,"
                 +"status INTEGER NOT NULL,"
-                +"color INTEGER NOT NULL);");
-        /*sqLiteDatabase.execSQL("CREATE TABLE table_list_case ("
-                +"_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                +" FOREIGN KEY (name_id) REFERENCES table_list_name_case (_id),"
-                +" description TEXT,"
-                +" date TEXT NOT NULL,"
-                +" time_start TEXT,"
-                +"time_end TEXT,"
-                +"status INTEGER NOT NULL,"
-                +"color INTEGER NOT NULL);");*/
+                +"color INTEGER NOT NULL,"
+                +" FOREIGN KEY (name_id) REFERENCES table_list_name_case (_id));");
          }
 
     @Override

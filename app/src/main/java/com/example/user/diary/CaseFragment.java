@@ -16,12 +16,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +55,11 @@ public class CaseFragment extends Fragment implements Titleable{
 
     //@BindView(R.id.switch_case_end)
     Switch sw;
+
+    NumberPicker np_start_hour;
+    NumberPicker np_start_minut;
+    NumberPicker np_end_hour;
+    NumberPicker np_end_minut;
 
     public static final String DATE_CASE = "date_case";
     public static final String POSITION = "position";
@@ -147,6 +155,27 @@ public class CaseFragment extends Fragment implements Titleable{
             }
             cursor.close();
         }
+
+        ///////////////////////////////////////////////////////////////
+        /*
+        np_start_hour = (NumberPicker)v.findViewById(R.id.n_start_hour);
+        np_start_hour.setMaxValue(23);
+        np_start_hour.setMinValue(0);
+        np_start_hour.setValue(0);
+        np_start_minut = (NumberPicker)v.findViewById(R.id.n_start_minut);
+        np_start_minut.setMaxValue(59);
+        np_start_minut.setMinValue(0);
+        np_start_minut.setValue(0);
+        np_end_hour = (NumberPicker)v.findViewById(R.id.n_end_hour);
+        np_end_hour.setMaxValue(23);
+        np_end_hour.setMinValue(0);
+        np_end_hour.setValue(0);
+        np_end_minut = (NumberPicker)v.findViewById(R.id.n_end_minut);
+        np_end_minut.setMaxValue(59);
+        np_end_minut.setMinValue(0);
+        np_end_minut.setValue(0);
+        */
+
         ///////////////////////////////////////////////////////////////
 
         bts = (Button)v.findViewById(R.id.button_save_case);
@@ -164,7 +193,18 @@ public class CaseFragment extends Fragment implements Titleable{
                 else  d+=dp.getMonth();
                 d +="."+dp.getYear();
 
-                //put time start and end
+                String time_start = "";
+                String time_end = "";
+                //NumberPicker np = (NumberPicker)getActivity().findViewById(R.id.n_start_hour);
+                //time_start = getString(CaseFragment.this.np_start_hour.getValue())+":";
+                //np = (NumberPicker)getActivity().findViewById(R.id.n_start_minut);
+                //time_start += getString(np_start_minut.getValue());
+
+                //np = (NumberPicker)getActivity().findViewById(R.id.n_end_hour);
+                //time_end = getString(np_end_hour.getValue())+":";
+                //np = (NumberPicker)getActivity().findViewById(R.id.n_end_minut);
+                //time_end += getString(np_end_minut.getValue());
+
 
                 String status = "";
                 if(sw.isChecked())status = "1";
@@ -196,8 +236,8 @@ public class CaseFragment extends Fragment implements Titleable{
                     cv.put("name_id", name_id);
                     cv.put("description", description);
                     cv.put("date", d);
-                    cv.put("time_start", "");
-                    cv.put("time_end", "");
+                    cv.put("time_start", time_start);
+                    cv.put("time_end", time_end);
                     cv.put("status", status);
                     cv.put("color", color);
 
