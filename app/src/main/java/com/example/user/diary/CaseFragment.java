@@ -107,7 +107,23 @@ public class CaseFragment extends Fragment implements Titleable{
         sp_color = (Spinner)v.findViewById(R.id.spinner_color);
         sp_color.setAdapter(ad);
         ////////////////////////////////////////////////////////////
-
+        np_start_hour = (NumberPicker)v.findViewById(R.id.n_start_hour);
+        np_start_hour.setMaxValue(23);
+        np_start_hour.setMinValue(0);
+        np_start_hour.setValue(0);
+        np_start_minut = (NumberPicker)v.findViewById(R.id.n_start_minut);
+        np_start_minut.setMaxValue(59);
+        np_start_minut.setMinValue(0);
+        np_start_minut.setValue(0);
+        np_end_hour = (NumberPicker)v.findViewById(R.id.n_end_hour);
+        np_end_hour.setMaxValue(23);
+        np_end_hour.setMinValue(0);
+        np_end_hour.setValue(0);
+        np_end_minut = (NumberPicker)v.findViewById(R.id.n_end_minut);
+        np_end_minut.setMaxValue(59);
+        np_end_minut.setMinValue(0);
+        np_end_minut.setValue(0);
+        ///////////////////////////////////////////////////////////////
 
 
         et = (EditText)v.findViewById(R.id.editText_description);
@@ -144,7 +160,11 @@ public class CaseFragment extends Fragment implements Titleable{
                 et.setText(cursor.getString(2));
                 dp.init(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day), null);
                 //
-
+                np_start_hour.setValue(Integer.valueOf(cursor.getString(4).substring(0,2)));
+                np_start_minut.setValue(Integer.valueOf(cursor.getString(4).substring(3,5)));
+                np_end_hour.setValue(Integer.valueOf(cursor.getString(5).substring(0,2)));
+                np_end_minut.setValue(Integer.valueOf(cursor.getString(5).substring(3,5)));
+                //
                 if (cursor.getInt(6) == 0) sw.setChecked(false);
                 else sw.setChecked(true);
 
@@ -156,27 +176,7 @@ public class CaseFragment extends Fragment implements Titleable{
             cursor.close();
         }
 
-        ///////////////////////////////////////////////////////////////
-        /*
-        np_start_hour = (NumberPicker)v.findViewById(R.id.n_start_hour);
-        np_start_hour.setMaxValue(23);
-        np_start_hour.setMinValue(0);
-        np_start_hour.setValue(0);
-        np_start_minut = (NumberPicker)v.findViewById(R.id.n_start_minut);
-        np_start_minut.setMaxValue(59);
-        np_start_minut.setMinValue(0);
-        np_start_minut.setValue(0);
-        np_end_hour = (NumberPicker)v.findViewById(R.id.n_end_hour);
-        np_end_hour.setMaxValue(23);
-        np_end_hour.setMinValue(0);
-        np_end_hour.setValue(0);
-        np_end_minut = (NumberPicker)v.findViewById(R.id.n_end_minut);
-        np_end_minut.setMaxValue(59);
-        np_end_minut.setMinValue(0);
-        np_end_minut.setValue(0);
-        */
 
-        ///////////////////////////////////////////////////////////////
 
         bts = (Button)v.findViewById(R.id.button_save_case);
         bts.setOnClickListener(new View.OnClickListener() {
@@ -195,15 +195,23 @@ public class CaseFragment extends Fragment implements Titleable{
 
                 String time_start = "";
                 String time_end = "";
-                //NumberPicker np = (NumberPicker)getActivity().findViewById(R.id.n_start_hour);
-                //time_start = getString(CaseFragment.this.np_start_hour.getValue())+":";
-                //np = (NumberPicker)getActivity().findViewById(R.id.n_start_minut);
-                //time_start += getString(np_start_minut.getValue());
+                NumberPicker np = (NumberPicker)getActivity().findViewById(R.id.n_start_hour);
+                if(String.valueOf(np_start_hour.getValue()).length()==1)
+                    time_start = "0"+ String.valueOf(np_start_hour.getValue())+":";
+                else time_start = String.valueOf(np_start_hour.getValue())+":";
+                np = (NumberPicker)getActivity().findViewById(R.id.n_start_minut);
+                if(String.valueOf(np_start_minut.getValue()).length()==1)
+                    time_start += "0"+ String.valueOf(np_start_minut.getValue());
+                else time_start += String.valueOf(np_start_minut.getValue());
 
-                //np = (NumberPicker)getActivity().findViewById(R.id.n_end_hour);
-                //time_end = getString(np_end_hour.getValue())+":";
-                //np = (NumberPicker)getActivity().findViewById(R.id.n_end_minut);
-                //time_end += getString(np_end_minut.getValue());
+                np = (NumberPicker)getActivity().findViewById(R.id.n_end_hour);
+                if(String.valueOf(np_end_hour.getValue()).length()==1)
+                    time_end = "0" + String.valueOf(np_end_hour.getValue())+":";
+                else time_end = String.valueOf(np_end_hour.getValue())+":";
+                np = (NumberPicker)getActivity().findViewById(R.id.n_end_minut);
+                if(String.valueOf(np_end_minut.getValue()).length()==1)
+                    time_end += "0" + String.valueOf(np_end_minut.getValue());
+                else time_end += String.valueOf(np_end_minut.getValue());
 
 
                 String status = "";
@@ -247,8 +255,8 @@ public class CaseFragment extends Fragment implements Titleable{
                     cv.put("name_id", name_id);
                     cv.put("description", description);
                     cv.put("date", d);
-                    cv.put("time_start", "");
-                    cv.put("time_end", "");
+                    cv.put("time_start", time_start);
+                    cv.put("time_end", time_end);
                     cv.put("status", status);
                     cv.put("color", color);
                     DataBaseHelper.getInstance().getWritableDatabase().update("table_list_case", cv, "_id = ?", new String[]{idd});
@@ -280,6 +288,8 @@ public class CaseFragment extends Fragment implements Titleable{
                 cf.setArguments(bundle);
 
                 //getFragmentManager().popBackStack();
+                //getActivity().getSupportFragmentManager().popBackStack();
+                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_content, cf).commit();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_content, cf).commit();
                 if (cf instanceof Titleable) {
                     String title = ((Titleable) cf).getTitle(getActivity());

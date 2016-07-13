@@ -147,7 +147,7 @@ public class WeekFragment extends Fragment implements Titleable{
                     bundle.putInt(CaseFragment.NEW_CASE,1);
                     CaseFragment cf = new CaseFragment();
                     cf.setArguments(bundle);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_content, cf).commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_content, cf).addToBackStack("tag").commit();
                     if (cf instanceof Titleable) {
                         String title = ((Titleable) cf).getTitle(getActivity());
                         getActivity().setTitle(title);
