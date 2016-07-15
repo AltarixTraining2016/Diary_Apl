@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by User on 01.07.2016.
@@ -77,14 +78,14 @@ public class DataBaseActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String id = idEditText.getText().toString();
                 Log.v("Sah", "delete " + id);
-                //try{
+                try{
                     DataBaseHelper.getInstance().getWritableDatabase().delete("table_list_name_case", "_id = ?", new String[]{id});
-                //}
-                //catch (Exception e)
-                //{
-                //    Toast toast = Toast.makeText(getApplicationContext(),"На данный элемент есть ссылка!", Toast.LENGTH_SHORT);
-                //    toast.show();
-                //}
+                }
+                catch (Exception e)
+                {
+                    Toast toast = Toast.makeText(getApplicationContext(),"На данный элемент есть ссылка!", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
 
             }
         });
