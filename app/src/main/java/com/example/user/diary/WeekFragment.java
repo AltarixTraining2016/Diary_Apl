@@ -28,6 +28,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by User on 25.06.2016.
  */
@@ -41,7 +44,7 @@ public class WeekFragment extends Fragment implements Titleable{
 
 
 
-    List<String> ls = new ArrayList<>();
+    //List<String> ls = new ArrayList<>();
     RecyclerView rv;
 
 
@@ -72,7 +75,7 @@ public class WeekFragment extends Fragment implements Titleable{
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        RecyclerView rv;
+
         List<String> ls = new ArrayList<>();
         List<String> wd= new ArrayList<String>();
         List<Integer> colorId = new ArrayList<>();
@@ -80,9 +83,16 @@ public class WeekFragment extends Fragment implements Titleable{
         Cursor cursor;
         String date;
 
-        public PlaceholderFragment() {
-        }
+        @BindView(R.id.section_label)
+        TextView textView;// = (TextView) v.findViewById(R.id.section_label);
 
+        @BindView(R.id.rec_week)
+        RecyclerView rv;
+
+        @BindView(R.id.week_date)
+        TextView tvData;// = (TextView)v.findViewById(R.id.week_date);
+
+        public PlaceholderFragment() {}
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
@@ -95,8 +105,13 @@ public class WeekFragment extends Fragment implements Titleable{
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.week_layout_cont, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            View v = inflater.inflate(R.layout.week_layout_cont, container, false);
+            ButterKnife.bind(this,v);
+            //////////////////////////////////////////////////////////////////
+
+            ls.clear();
+            colorId.clear();
+            status.clear();
 
             wd.add("Понедельник");
             wd.add("Вторник");
@@ -105,18 +120,20 @@ public class WeekFragment extends Fragment implements Titleable{
             wd.add("Пятница");
             wd.add("Суббота");
             wd.add("Воскресенье");
+            //////////////////////////////////////////////////////////////////
 
             textView.setText(wd.get(getArguments().getInt(ARG_SECTION_NUMBER)));
             textView.setTextSize(24);
-            setRecycler(rootView,R.id.rec_week);
 
+            rv.setAdapter(new Adapter());
+            rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-            ls.clear();
-            TextView tvData = (TextView)rootView.findViewById(R.id.week_date);
+
             tvData.setTextSize(24);
             date = getDate(getArguments().getInt(ARG_SECTION_NUMBER));
-            tvData.setText(date); //dateFormat.format(new Date()));
+            tvData.setText(date);
+            //////////////////////////////////////////////////////////////////
 
             cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name_id,color,status FROM table_list_case WHERE date = ?", new String[]{date});
             Cursor cursor_dop = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name FROM table_list_name_case", null);
@@ -135,15 +152,15 @@ public class WeekFragment extends Fragment implements Titleable{
             cursor.close();
             cursor_dop.close();
 
-            FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab_week_list);
+            FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab_week_list);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     int position = ls.size();
                     Bundle bundle = new Bundle();
-                    bundle.putString(CaseFragment.DATE_CASE,date);//"DATE_CASE",date);
-                    bundle.putInt(CaseFragment.POSITION,position);//"POSITION",position);
+                    bundle.putString(CaseFragment.DATE_CASE,date);
+                    bundle.putInt(CaseFragment.POSITION,position);
                     bundle.putInt(CaseFragment.NEW_CASE,1);
                     CaseFragment cf = new CaseFragment();
                     cf.setArguments(bundle);
@@ -156,12 +173,11 @@ public class WeekFragment extends Fragment implements Titleable{
                 }
             });
 
-            return rootView;
+            return v;
         }
 
         public String getDate(int j){
             SimpleDateFormat dateFormat = new SimpleDateFormat("EEEEEEE");
-            //SimpleDateFormat dateFormat = new SimpleDateFormat("u");
             Date d = new Date();
             int i = 0;
             int day;
@@ -175,7 +191,6 @@ public class WeekFragment extends Fragment implements Titleable{
             else if (dateFormat.format(d).equals("вс")) i = 6;
 
             Calendar calendar = Calendar.getInstance();
-            //calendar.add(Calendar.DATE, i);
 
             if(j<i){
                 day = i-j;
@@ -188,14 +203,6 @@ public class WeekFragment extends Fragment implements Titleable{
             dateFormat = new SimpleDateFormat("dd.MM.yyyy");
             d = calendar.getTime();
             return dateFormat.format(d);
-        }
-
-        public  void setRecycler(View v,int id){
-            rv = (RecyclerView)v.findViewById(id);
-
-
-            rv.setAdapter(new Adapter());
-            rv.setLayoutManager(new LinearLayoutManager(getContext()));
         }
 
         class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -233,8 +240,6 @@ public class WeekFragment extends Fragment implements Titleable{
 
             @Override
             public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                //return new ViewHolder(parent);
-                //return new ViewHolder(View.inflate(MainActivity.this, R.layout.listitem_card, null));
                 return new ViewHolder(View.inflate(getContext(), R.layout.listitem_card, null));
             }
 

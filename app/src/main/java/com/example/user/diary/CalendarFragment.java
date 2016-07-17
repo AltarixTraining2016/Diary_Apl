@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by User on 25.06.2016.
@@ -26,30 +28,27 @@ public class CalendarFragment extends Fragment implements Titleable{
         return new CalendarFragment();
     }
 
-    //@BindView(R.id.calendarView)
-    //CalendarView cv;
-
+    @BindView(R.id.date_display)
     TextView dateDisplay;
+
+    @BindView(R.id.datePicker)
     DatePicker dp;
-    FragmentTransaction ft;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.calendar_layout, container, false);
 
+        ButterKnife.bind(this,v);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
-        dateDisplay = (TextView)v.findViewById(R.id.date_display);
         dateDisplay.setText("Сегодня: "+dateFormat.format(new Date()));
-
-        dp = (DatePicker)v.findViewById(R.id.datePicker);
 
         Button btds = (Button)v.findViewById(R.id.button_date_select);
         btds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ft = getActivity().getSupportFragmentManager().beginTransaction();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 CaseListFragment clf = new CaseListFragment();
                 Bundle bundle = new Bundle();
                 String date = "";
@@ -67,11 +66,8 @@ public class CalendarFragment extends Fragment implements Titleable{
                     String title = ((Titleable) clf).getTitle(getActivity());
                     getActivity().setTitle(title);
                 }
-                //
             }
         });
-
-
 
         return v;
     }

@@ -35,15 +35,13 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    FragmentTransaction ft;
-    Bundle bundle;
-    SimpleDateFormat dateFormat;
-
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
 
-    //List<String> ls = new ArrayList<>();
+    ActionBarDrawerToggle toggle;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -57,25 +55,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
 
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        ///
         replaceContent(CaseListFragment.create());
-
         setTables();
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -95,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        //int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
 
@@ -145,19 +138,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawers();
         }
         return b;
-
-        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //drawer.closeDrawer(GravityCompat.START);
-        //return true;
     }
 
     private void replaceContent(Fragment fragment) {
-        //
-        //ft = getSupportFragmentManager().beginTransaction();
-        //ft.replace(R.id.container_content, fragment);
-        //ft.commit();
-        bundle = new Bundle();
-        dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Bundle bundle = new Bundle();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         bundle.putString("DATA_CASE_LIST",dateFormat.format(new Date()));
         fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.container_content, fragment).commit();

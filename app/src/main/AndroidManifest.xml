@@ -28,7 +28,7 @@
 
         <activity
             android:name=".DataBaseActivity"
-            android:label="nkjh">
+            android:label="DataBase">
 
         </activity>
 

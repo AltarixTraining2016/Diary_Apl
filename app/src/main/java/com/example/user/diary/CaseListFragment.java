@@ -25,54 +25,48 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by User on 20.06.2016.
  */
 public class CaseListFragment extends Fragment implements Titleable{
 
-    public CaseListFragment(){}
-    public CaseListFragment(String data){}
-    String date;
-    Cursor cursor;
+    //public CaseListFragment(){}
+    //public CaseListFragment(String data){}
 
-    //public static CaseListFragment create() {return new CaseListFragment();}
+
+    @BindView(R.id.recycler)
+    RecyclerView rv;
+
+    @BindView(R.id.text_data_case_list)
+    TextView tvData;
+
     public static CaseListFragment create(){//String data) {
-        CaseListFragment cf = new CaseListFragment();
-        //Bundle args = new Bundle();
-        //args.putString(DATA_CASE_LIST, data);
-        //cf.setArguments(args);
-        return cf;
+        return new CaseListFragment();
     }
 
     private final String DATA_CASE_LIST = "data_case_list";
     List<String> ls = new ArrayList<>();
     List<Integer> colorId = new ArrayList<>();
     List<Integer> status = new ArrayList<>();
+    String date;
 
-    /*public CaseListFragment(String data){
-        CaseListFragment cf = new CaseListFragment();
-        Bundle args = new Bundle();
-        args.putString(DATA_CASE_LIST, data);
-        cf.setArguments(args);
-        //return cf;
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.case_list_layout, container, false);
-        RecyclerView rv = (RecyclerView)v.findViewById(R.id.recycler);
+        ButterKnife.bind(this,v);
 
-        //for(int i = 0; i<20;i++)
-        //    if(i%2!=0)
-        //        ls.add("case "+i);
-        //    else ls.add("case  /nffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff      "+i);
+        //RecyclerView rv = (RecyclerView)v.findViewById(R.id.recycler);
 
         date = this.getArguments().getString("DATA_CASE_LIST");
-        TextView tvData = (TextView)v.findViewById(R.id.text_data_case_list);
+        //TextView tvData = (TextView)v.findViewById(R.id.text_data_case_list);
         tvData.setText(date);
 
 
-        cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name_id,color,status FROM table_list_case WHERE date = ?", new String[]{date});
+        Cursor cursor = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name_id,color,status FROM table_list_case WHERE date = ?", new String[]{date});
         Cursor cursor_dop = DataBaseHelper.getInstance().getWritableDatabase().rawQuery("SELECT name FROM table_list_name_case", null);
         if (cursor.moveToFirst()) {
             cursor_dop.moveToFirst();
@@ -163,8 +157,6 @@ public class CaseListFragment extends Fragment implements Titleable{
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            //return new ViewHolder(parent);
-            //return new ViewHolder(View.inflate(MainActivity.this, R.layout.listitem_card, null));
             return new ViewHolder(View.inflate(getContext(), R.layout.listitem_card, null));
         }
 
@@ -173,7 +165,6 @@ public class CaseListFragment extends Fragment implements Titleable{
             holder.tv.setText(ls.get(position));
 
             setColor(colorId.get(position),status.get(position),holder.ll);
-            //if(position%2==0) holder.ll.setBackgroundResource(R.drawable.style_button_add_name);//getResources().getColor(R.color.tvBackground));
         }
 
         public void setColor(int position,int status,LinearLayout ll){

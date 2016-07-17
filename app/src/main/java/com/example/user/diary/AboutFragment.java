@@ -6,6 +6,7 @@ package com.example.user.diary;
         import android.os.Bundle;
         import android.support.design.widget.FloatingActionButton;
         import android.support.design.widget.Snackbar;
+        import android.support.v4.widget.DrawerLayout;
         import android.support.v7.app.AppCompatActivity;
         import android.support.v7.widget.Toolbar;
         import android.support.v4.app.Fragment;
@@ -15,6 +16,8 @@ package com.example.user.diary;
         import android.view.Menu;
         import android.view.MenuItem;
         import android.widget.Button;
+
+        import butterknife.BindView;
 
 
 /**
@@ -29,6 +32,8 @@ public class AboutFragment extends Fragment implements Titleable{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.about_layout, container, false);
+
+
 
         Button b = (Button)v.findViewById(R.id.button_db);
         b.setOnClickListener(new View.OnClickListener(){
