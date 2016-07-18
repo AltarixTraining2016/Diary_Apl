@@ -6,7 +6,7 @@
     android:weightSum="1">
 
     <TextView
-        android:layout_width="97dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/diary"
@@ -24,24 +24,25 @@
         android:layout_marginTop="15px" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="600dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Разработчик:"
+        android:text="@string/developer"
         android:id="@+id/textView"
         android:layout_marginLeft="55px"
-        android:layout_marginTop="55px" />
+        android:layout_marginTop="55px"
+        android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Сахибназарова Виктория"
+        android:text="@string/SahVik"
         android:id="@+id/textView2"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25px" />
 
-    <Button
+    <!--Button
         android:id="@+id/button_db"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25px"
-        android:text="set db"/>
+        android:text="set db"/-->
 
 
 </LinearLayout>

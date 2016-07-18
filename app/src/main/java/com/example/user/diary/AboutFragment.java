@@ -35,7 +35,7 @@ public class AboutFragment extends Fragment implements Titleable{
 
 
 
-        Button b = (Button)v.findViewById(R.id.button_db);
+        /*Button b = (Button)v.findViewById(R.id.button_db);
         b.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -50,7 +50,7 @@ public class AboutFragment extends Fragment implements Titleable{
             public void onClick(View v) {
                 setTestTables();
             }
-        });
+        });*/
 
         return v;
     }
@@ -64,7 +64,7 @@ public class AboutFragment extends Fragment implements Titleable{
         cv.put("_id", "1");
         cv.put("name_id", "1");
         cv.put("description", "u");
-        cv.put("date", "15.07.2016");
+        cv.put("date", "18.07.2016");
         cv.put("time_start", "11:11");
         cv.put("time_end", "17:56");
         cv.put("status", "0");
@@ -73,7 +73,7 @@ public class AboutFragment extends Fragment implements Titleable{
         cv.put("_id", "2");
         cv.put("name_id", "2");
         cv.put("description", "urr");
-        cv.put("date", "15.07.2016");
+        cv.put("date", "18.07.2016");
         cv.put("time_start", "17:11");
         cv.put("time_end", "19:56");
         cv.put("status", "1");
@@ -82,7 +82,7 @@ public class AboutFragment extends Fragment implements Titleable{
         cv.put("_id", "3");
         cv.put("name_id", "3");
         cv.put("description", "mr");
-        cv.put("date", "15.07.2016");
+        cv.put("date", "18.07.2016");
         cv.put("time_start", "00:00");
         cv.put("time_end", "00:00");
         cv.put("status", "0");
@@ -91,7 +91,7 @@ public class AboutFragment extends Fragment implements Titleable{
         cv.put("_id", "4");
         cv.put("name_id", "4");
         cv.put("description", "gr");
-        cv.put("date", "16.07.2016");
+        cv.put("date", "19.07.2016");
         cv.put("time_start", "17:11");
         cv.put("time_end", "19:56");
         cv.put("status", "0");
@@ -100,7 +100,7 @@ public class AboutFragment extends Fragment implements Titleable{
         cv.put("_id", "5");
         cv.put("name_id", "5");
         cv.put("description", "fr");
-        cv.put("date", "17.07.2016");
+        cv.put("date", "20.07.2016");
         cv.put("time_start", "00:00");
         cv.put("time_end", "00:00");
         cv.put("status", "1");
@@ -109,7 +109,7 @@ public class AboutFragment extends Fragment implements Titleable{
         cv.put("_id", "6");
         cv.put("name_id", "3");
         cv.put("description", "tr");
-        cv.put("date", "17.07.2016");
+        cv.put("date", "20.07.2016");
         cv.put("time_start", "17:11");
         cv.put("time_end", "00:00");
         cv.put("status", "0");
@@ -118,7 +118,7 @@ public class AboutFragment extends Fragment implements Titleable{
         cv.put("_id", "7");
         cv.put("name_id", "5");
         cv.put("description", "er");
-        cv.put("date", "15.07.2016");
+        cv.put("date", "18.07.2016");
         cv.put("time_start", "00:00");
         cv.put("time_end", "00:00");
         cv.put("status", "0");
@@ -127,7 +127,7 @@ public class AboutFragment extends Fragment implements Titleable{
         cv.put("_id", "8");
         cv.put("name_id", "3");
         cv.put("description", "er");
-        cv.put("date", "14.07.2016");
+        cv.put("date", "21.07.2016");
         cv.put("time_start", "00:00");
         cv.put("time_end", "00:00");
         cv.put("status", "0");
