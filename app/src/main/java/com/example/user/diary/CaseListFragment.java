@@ -33,10 +33,6 @@ import butterknife.ButterKnife;
  */
 public class CaseListFragment extends Fragment implements Titleable{
 
-    //public CaseListFragment(){}
-    //public CaseListFragment(String data){}
-
-
     @BindView(R.id.recycler)
     RecyclerView rv;
 
@@ -58,11 +54,9 @@ public class CaseListFragment extends Fragment implements Titleable{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.case_list_layout, container, false);
         ButterKnife.bind(this,v);
-
-        //RecyclerView rv = (RecyclerView)v.findViewById(R.id.recycler);
+        
 
         date = this.getArguments().getString("DATA_CASE_LIST");
-        //TextView tvData = (TextView)v.findViewById(R.id.text_data_case_list);
         tvData.setText(date);
 
 

@@ -84,13 +84,13 @@ public class WeekFragment extends Fragment implements Titleable{
         String date;
 
         @BindView(R.id.section_label)
-        TextView textView;// = (TextView) v.findViewById(R.id.section_label);
+        TextView textView;
 
         @BindView(R.id.rec_week)
         RecyclerView rv;
 
         @BindView(R.id.week_date)
-        TextView tvData;// = (TextView)v.findViewById(R.id.week_date);
+        TextView tvData;
 
         public PlaceholderFragment() {}
 
